@@ -4,7 +4,7 @@ require('../utils/firebase-config.js');
 require('firebase/database');
 
 const db = admin.database();
-const ref = db.ref('/user');
+const ref = db.ref('/users');
 
 // Register a new user
 exports.registerUser = async (req, res) => {
