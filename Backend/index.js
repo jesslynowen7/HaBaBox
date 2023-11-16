@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const authRoutes = require('./src/auth');
 const hotelRoutes = require('./src/hotel');
+const roomRoutes = require('./src/room');
 
 // Middlewares
 app.use(express.urlencoded({ extended: false }));
@@ -10,6 +11,7 @@ app.use(express.json());
 // API routes
 app.use('/auth', authRoutes);
 app.use('/hotel', hotelRoutes);
+app.use('/room', roomRoutes);
 // app.use('/', progressRoutes);
 
 // Default route
