@@ -91,7 +91,7 @@ exports.updateTransaction = async (req, res) => {
             oldData.transactionDate = transactionDate
         }
         if (checkinDate != "") {
-            oldData.status = checkinDate
+            oldData.checkinDate = checkinDate
         }
         if (checkoutDate != "") {
             oldData.checkoutDate = checkoutDate
