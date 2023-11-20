@@ -58,13 +58,13 @@ exports.updateHotel = async (req, res) => {
     if (name != "") {
         oldData.name = name
 	}
-    if (address == "") {
+    if (address != "") {
         oldData.address = address
 	}
-    if (city == "") {
+    if (city != "") {
         oldData.city = city
 	}
-    if (phone == "") {
+    if (phone != "") {
         oldData.phone = phone
 	}
     const newDataHotel = {
