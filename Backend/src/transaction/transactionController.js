@@ -153,7 +153,7 @@ exports.getTransactionByTransactionId = async (req, res) => {
             data = doc.data()
         });
 
-        res.status(200).json({ message: 'Transaction(s) retrieved successfully!', error: null, data: data })
+        res.status(200).json({ message: 'Transaction retrieved successfully!', error: null, data: data })
     } catch (error) {
         res.status(401).json({ message: 'Failed to get transaction', error: error.message });
     }
