@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { insertRoom, deleteRoom, getRoomsByHotelName } = require('./roomController');
+const { insertRoom, updateRoom, deleteRoom, getRoomByRoomId, getRoomsByHotelName, updateRoomStatusToBooked,
+    updateRoomStatusToAvailable } = require('./roomController');
 
 //Admin
 router.post('/', insertRoom);
-router.delete('/:roomId', deleteRoom)
+router.put('/:roomId', updateRoom);
+router.put('/:roomId/booked', updateRoomStatusToBooked);
+router.put('/:roomId/available', updateRoomStatusToAvailable);
+router.delete('/:roomId', deleteRoom);
 
 //User
-router.get('/:hotelName', getRoomsByHotelName)
+router.get('/:roomId', getRoomByRoomId);
+router.get('/hotel/:hotelName', getRoomsByHotelName);
 
 module.exports = router;
