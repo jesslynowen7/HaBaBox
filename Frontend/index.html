@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hababox - Capsule Hotel!</title>
+        <link rel="icon" href="images/LogoHBB.svg">
+
+        <link rel="styleesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="css/header.css"> -->
+        <link rel="stylesheet" href="css/home.css">
+        <!-- <link rel="stylesheet" href="css/footer.css"> -->
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body>
+        <header class="">
+            <nav class="header">
+                <section class="navbar">
+                    <div class="logo">
+                        <a><img class="header_logo" src="images/LogoHBB.svg" alt="hababox logo" href="/"></a>
+                        <a href="/" class="text-3xl font-bold underline">Hababox</a>
+                    </div>
+                    <div class="profile">
+                        <a href="/promo">%</a>
+                        <img class="profile_icon" src="images/default_pfp.jpeg" alt="profile picture" href="/">
+                    </div>
+                </section>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hotel_finder">
+                <form id="search_form" class="justify-content-center">
+                    <h1>Where to go?</h1>
+                    <div class="location justify-content-center">
+                        <div class="col">
+                            <input type="text" class="input form-control" id="location" name="location" placeholder="Location" required>
+                        </div>
+                        <div class="col">
+                            <input type="date" class="input form-control" id="checkin" name="checkIn" placeholder="Check In" required>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="input form-control" id="duration" name="duration" placeholder="Duration" required>
+                        </div>
+                        <div class="col">
+                            <input type="date" class="input form-control" id="checkout" name="checkOut" placeholder="Check Out" required>
+                        </div>
+                        <input class="search_icon" type="image" src="images/icon_search_32.png" alt="Submit"/>
+                    </div>
+                </form>
+
+                <div class="picture_section row justify-content-center">
+                    <h1>Experience more for less.</h1>
+                    <img id="hotel_home" src="images/hotel.png" alt="hotel">
+                </div>
+            </section>
+
+            <section class="gallery justify-content-center">
+                <div class="slider">
+                    <h1 class="title">Gallery</h1>
+                    <div class="sliding">
+                        <img id="hp" src="images/Image Assets/HorizontalImage1.jpg" alt="hotel">
+                        <img id="hp" src="images/Image Assets/HorizontalImage2.jpg" alt="hotel">
+                        <img id="hp" src="images/Image Assets/HorizontalImage3.jpg" alt="hotel">
+                    </div>
+                    <a class="buttons prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="buttons next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+            </section>
+
+            <section class="promotion justify-content-center">
+                <div class="promo">
+                    <h1 class="title">Our Promo</h1>
+                    <div class="ad"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    </body>
+</html>
