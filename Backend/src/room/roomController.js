@@ -173,7 +173,7 @@ exports.getRoomByRoomId = async (req, res) => {
             data = doc.data()
         });
 
-        res.status(200).json({ message: 'Room retrieved successfully!', error: null, data: data })
+        res.status(200).json({ message: 'Room retrieved successfully!', error: null, data: data });
     } catch (error) {
         res.status(401).json({ message: 'Failed to get room', error: error.message });
     }
@@ -194,8 +194,95 @@ exports.getRoomsByHotelName = async (req, res) => {
             dataArr.push({ id, data })
         });
 
-        res.status(200).json({ message: 'Room(s) retrieved successfully!', error: null, data: dataArr })
+        res.status(200).json({ message: 'Room(s) retrieved successfully!', error: null, data: dataArr });
     } catch (error) {
         res.status(401).json({ message: 'Failed to get room(s)', error: error.message });
     }
+}
+
+exports.searchRoom = async (req, res) => {
+    try {
+        const { location, checkIn, checkOut } = req.query;
+
+        // Check if required parameters are provided
+        if (!location || !checkIn || !checkOut) {
+            res.status(400).json({ message: 'Location, checkIn, and checkOut parameters are required', error: null, data: null });
+            return;
+        }
+
+        const hotelsSnapshot = await db.collection('hotels').where('city', '==', location).get();
+
+        if (hotelsSnapshot.empty) {
+            res.status(200).json({ message: 'No room found', error: null, data: null });
+            return;
+        }
+
+        const hotelArr = [];
+
+        for (const hotelDoc of hotelsSnapshot.docs) {
+            const hotelData = hotelDoc.data();
+            const hotelName = hotelData.name;
+
+            // Check if hotelName is defined
+            if (!hotelName) {
+                res.status(500).json({ message: 'Hotel name is undefined', error: null, data: null });
+                return;
+            }
+
+            const roomsSnapshot = await db.collection('rooms').where('hotelName', '==', hotelName).get();
+            const roomArr = [];
+
+            if (!roomsSnapshot.empty) {
+                for (const roomDoc of roomsSnapshot.docs) {
+                    const roomData = roomDoc.data();
+                    const isRoomAvailable = await isRoomAvailableForDates(roomData.roomId, checkIn, checkOut);
+
+                    if (isRoomAvailable) {
+                        roomArr.push(roomData);
+                    }
+                }
+            }
+
+            if (roomArr.length > 0) {
+                hotelArr.push({ hotelName, roomArr });
+            }
+        }
+
+        res.status(200).json({ message: 'Room(s) retrieved successfully!', error: null, data: hotelArr });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to search room', error: error.message, data: null });
+    }
+};
+
+const isRoomAvailableForDates = async (roomId, checkIn, checkOut) => {
+    const transactionsSnapshot = await db.collection('transactions').where('roomId', '==', roomId).get();
+    let returnValue = true
+    if (transactionsSnapshot.empty) {
+        return returnValue
+    }
+    for (const doc of transactionsSnapshot.docs) {
+        const reservedCheckIn = doc.data().checkinDate;
+        const reservedCheckOut = doc.data().checkoutDate;
+        if (isTimeColliding(checkIn, reservedCheckIn, reservedCheckOut) ||
+            isTimeColliding(checkOut, reservedCheckIn, reservedCheckOut)
+        ) {
+            returnValue = false
+            break;
+        }
+    };
+
+    return returnValue
+};
+
+function isTimeColliding(dateCheck, dateFrom, dateTo) {
+    // Parse date format from (DD/MM/YYYY) to (YYYY/MM/DD)
+    const d1 = dateFrom.split("/");
+    const d2 = dateTo.split("/");
+    const c = dateCheck.split("/");
+
+    const from = new Date(d1[2], parseInt(d1[1]) - 1, d1[0]);  // -1 because months are from 0 to 11
+    const to = new Date(d2[2], parseInt(d2[1]) - 1, d2[0]);
+    const check = new Date(c[2], parseInt(c[1]) - 1, c[0]);
+
+    return check >= from && check <= to
 }
