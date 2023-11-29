@@ -7,12 +7,12 @@ const ref = db.collection('e_tickets');
 
 exports.insertETicket = async (req, res) => {
   try {
-    const { eTicketId, memberId, date, roomId, price } = req.body;
+    const { eTicketId, email, date, roomId, price } = req.body;
 
     // Add to firestore
     const eTicketData = {
         eTicketId: eTicketId,
-        memberId: memberId,
+        email: email,
         date: date,
         roomId: roomId,
         price: price

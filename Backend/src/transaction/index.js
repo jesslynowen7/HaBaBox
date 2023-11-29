@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { insertTransaction, updateTransaction, deleteTransaction, getTransactionsByMemberId,
+const { insertTransaction, updateTransaction, deleteTransaction, getTransactionsByEmail,
     getTransactionByTransactionId } = require('./transactionController.js');
 
 //Admin
@@ -10,6 +10,6 @@ router.put('/:transactionId', updateTransaction);
 router.post('/', insertTransaction);
 router.delete('/:transactionId', deleteTransaction);
 router.get('/:transactionId', getTransactionByTransactionId)
-router.get('/member/:memberId', getTransactionsByMemberId)
+router.get('/member/:email', getTransactionsByEmail)
 
 module.exports = router;

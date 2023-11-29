@@ -8,8 +8,8 @@ const ref = db.collection('users');
 exports.updateProfilePicture = async (req, res) => {
     try {
         const profilePic = req.body;
-        const memberId = req.params['memberId']
-        const snapshot = await ref.where('memberId', '==', memberId).get();
+        const email = req.params['email']
+        const snapshot = await ref.where('email', '==', email).get();
         if (snapshot.empty) {
             res.status(200).json({ message: 'Member not found', error: null, data: null});
             return;
@@ -35,8 +35,8 @@ exports.updateProfilePicture = async (req, res) => {
 exports.updateMemberPoints = async (req, res) => {
     try {
         const points = req.body;
-        const memberId = req.params['memberId']
-        const snapshot = await ref.where('memberId', '==', memberId).get();
+        const email = req.params['email']
+        const snapshot = await ref.where('email', '==', email).get();
         if (snapshot.empty) {
             res.status(200).json({ message: 'Member not found', error: null, data: null});
             return;
