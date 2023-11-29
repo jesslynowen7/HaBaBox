@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="icon" href="images/LogoHBB.svg">
+    <link rel="stylesheet" href="css/update-profile.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h2 id="edit-profile-title">Edit Profile</h2>
+        <div id="grid-wrapper">
+            <div id="profile-wrapper">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div id="pfp-wrapper">
+                        <h3>Profile Photo</h3>
+                        <img src="images/default_pfp.jpeg" alt="Current Profile Picture">
+                        <input type="file" id="upload-pfp" name="pfp_input">
+                    </div>
+                    <div id="data-update">
+                        <label id="update-name">
+                            Name<br>
+                            <input type="text" name="new-name" id="form-name">
+                        </label>
+                        <label id="update-telephone">
+                            Telephone<br>
+                            <input type="number" name="new-telephone-number" id="form-telephone">
+                        </label>
+                        <label id="update-telephone">
+                            E-Mail<br>
+                            <input type="email" name="new-email" id="form-email">
+                        </label>
+                        <input type="submit" id="update-button" value="Update">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="css/payment.css">
+    <script src="javascript/include_header_footer.js"></script>
+</head>
+
+<body>
+    <!-- Include the header -->
+    <div id="header-container"></div>
+    <div id="checkout-container">
+        <div id="progress_bar">
+            <p class="teks-checkout">Checkout</p>
+            <p>></p>
+            <p class="teks-payment">Payment</p>
+            <p>></p>
+            <p class="teks-review">Review Booking</p>
+            <p>></p>
+            <p class="teks-success">Success</p>
+        </div>
+    </div>
+    <div id="group-grid">
+        <div id="payment-grid">
+            <div id="bank">
+                <h3>Virtual Account Banking</h3>
+                <div id="bank-grid">
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="bca">
+                        <img src="images/bca.png" alt="BCA">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="danamon">
+                        <img src="images/danamon.png" alt="Danamon">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="cimb">
+                        <img src="images/cimb.png" alt="CIMB">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="citi">
+                        <img src="images/citi.png" alt="citi">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="digibank">
+                        <img src="images/digibank.png" alt="Digibank">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="hsbc">
+                        <img src="images/hsbc.png" alt="HSBC">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="panin">
+                        <img src="images/panin.png" alt="PaninBank">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="bjb">
+                        <img src="images/bjb.png" alt="BJB">
+                    </label>
+                </div>
+            </div>
+            <div id="e-money">
+                <h3>E-Money</h3>
+                <div id="emoney-grid">
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="dana">
+                        <img src="images/dana.png" alt="dana">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="ovo">
+                        <img src="images/ovo-payment.png" alt="OVO">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="gopay">
+                        <img src="images/gopay-payment.png" alt="GoPay">
+                    </label>
+                    <label class="image-radio">
+                        <input type="radio" name="payment-method" value="shopeepay">
+                        <img src="images/shopeepay-payment.png" alt="ShopeePay">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="right-grid">
+            <div id="order-div">
+                <div id="order-id-div">
+                    <p>Order ID</p>
+                    <p id="order-id-num">1432312312318</p>
+                </div>
+                <h3>HaBaBox Bandung</h3>
+                <div id="order-grid-nest">
+                    <div id="payment-check-in">
+                        <p>Check In</p>
+                        <p id="check-in-date">23 Dec 2023</p>
+                    </div>
+                    <div id="payment-check-out">
+                        <p>Check Out</p>
+                        <p id="check-out-date">24 Dec 2023</p>
+                    </div>
+                    <div id="payment-duration">
+                        <p>Duration</p>
+                        <p id="duration">1 Night</p>
+                    </div>
+                </div>
+            </div>
+            <div id="diskon-div">
+                <h4>Diskon</h4>
+                <div id="promo">
+                    <p>Promo</p>
+                    <button id="choose-promo" onclick="openPopupPromo()">Choose</button>
+                </div>
+                <div id="coin">
+                    <p>Coin</p>
+                    <button id="choose-point" onclick="openPopupPoint()">15.000 Available</p>
+                </div>
+            </div>
+            <div id="rincian-harga">
+                <h4>Rincian Harga</h4>
+                <div id="order-items">
+                    <div>
+                        <p id="room-ordered">1 EARTH DOUBLE</p>
+                        <p id="date-room-ordered">23 Mar 2023</p>
+                    </div>
+                    <p id="price-room">Rp. 200.340</p>
+                </div>
+                <div id="habapoint-div">
+                    <p>Habapoint</p>
+                    <p>Rp.</p>
+                </div>
+                <div id="voucher-div">
+                    <p>Voucher</p>
+                    <p>Rp.</p>
+                </div>
+                <div id="total-div">
+                    <p>Total</p>
+                    <p>Rp. 200.340</p>
+                </div>
+
+                <button id="pay-button">Pay</button>
+            </div>
+        </div>
+    </div>
+    <div class="promo-popup" id="promo-popup">
+        <div id="promo-popup-header">
+            <h2>Promo</h2>
+            <button id="close-promo-popup" onclick="closePopupPromo()">X</button>
+        </div>
+
+        <div id="grid-promo-popup">
+            <input type="text" name="promo-input" id="promo-input">
+            <button onclick="applyPromo()">Apply</button>
+        </div>
+        <div id="promo-box">
+        </div>
+    </div>
+    <div class="point-popup" id="point-popup">
+        <div id="header-popup-point">
+            <h2>Point</h2>
+            <button id="close-popup-point" onclick="closePopupPoint()">X</button>
+        </div>
+
+        <input type="number" name="input-point-amount" id="popup-input-poin" min="0" max="100000">
+        <button id="point-popup-confirm-button" onclick="applyPoint()">Confirm</button>
+    </div>
+    <!-- Include the footer -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Add event listener for logout confirmation
+        let popupPromo = document.getElementById("promo-popup");
+        let popupPoint = document.getElementById("point-popup");
+
+        function openPopupPromo() {
+            popupPromo.classList.add("open-popup");
+        }
+        function closePopupPromo() {
+            popupPromo.classList.remove("open-popup");
+        }
+
+        function openPopupPoint() {
+            popupPoint.classList.add("open-popup-point");
+        }
+        function closePopupPoint() {
+            popupPoint.classList.remove("open-popup-point");
+        }
+    </script>
+</body>
+
+</html>
