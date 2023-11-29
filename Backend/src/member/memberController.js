@@ -38,7 +38,7 @@ exports.updateProfilePicture = async (req, res) => {
 
 exports.updateMemberPoints = async (req, res) => {
     try {
-        const point = req.body.point;
+        const point = parseInt(req.body.point);
         const email = req.params['email']
         const snapshot = await ref.where('email', '==', email).get();
         if (snapshot.empty) {
@@ -51,7 +51,7 @@ exports.updateMemberPoints = async (req, res) => {
         });
 
         if (point != "") {
-            oldData.point = point
+            oldData.point = oldData.point + point
         } 
         const newDataMember = {
             email: oldData.email,
