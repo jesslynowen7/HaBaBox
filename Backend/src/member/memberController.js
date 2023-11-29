@@ -7,7 +7,7 @@ const ref = db.collection('users');
 
 exports.updateProfilePicture = async (req, res) => {
     try {
-        const profilePic = req.body;
+        const profilePic = req.body.profilePic;
         const email = req.params['email']
         const snapshot = await ref.where('email', '==', email).get();
         if (snapshot.empty) {
@@ -18,11 +18,15 @@ exports.updateProfilePicture = async (req, res) => {
             id = doc.id
             oldData = doc.data()
         });
+        
+        if (profilePic != "") {
+            oldData.profilePic = profilePic
+        } 
         const newDataMember = {
             email: oldData.email,
             name: oldData.name,
             point: oldData.point,
-            profilePic: profilePic,
+            profilePic: oldData.profilePic,
         }
         
         await ref.doc(id).update(newDataMember);
@@ -34,7 +38,7 @@ exports.updateProfilePicture = async (req, res) => {
 
 exports.updateMemberPoints = async (req, res) => {
     try {
-        const points = req.body;
+        const point = req.body.point;
         const email = req.params['email']
         const snapshot = await ref.where('email', '==', email).get();
         if (snapshot.empty) {
@@ -45,10 +49,14 @@ exports.updateMemberPoints = async (req, res) => {
             id = doc.id
             oldData = doc.data()
         });
+
+        if (point != "") {
+            oldData.point = point
+        } 
         const newDataMember = {
             email: oldData.email,
             name: oldData.name,
-            point: points,
+            point: oldData.point,
             profilePic: oldData.profilePic,
         }
         

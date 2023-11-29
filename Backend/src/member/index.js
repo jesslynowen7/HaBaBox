@@ -4,6 +4,6 @@ const { updateProfilePicture, updateMemberPoints } = require('./memberController
 
 //User
 router.put('/profile/:email', updateProfilePicture);
-router.put('/points/:email', updateMemberPoints)
+router.put('/point/:email', updateMemberPoints)
 
 module.exports = router;
