@@ -19,7 +19,8 @@ exports.registerUser = async (req, res) => {
       name: name,
       email: email,
       point: 0,
-      profile_pic: null
+      profile_pic: null,
+      userType: "User"
     }
 
     await ref.add(userData);
@@ -41,11 +42,16 @@ exports.loginUser = async (req, res) => {
     // Generate an access token
     const accessToken = await userCredential.user.getIdToken();
     const emailUser = userCredential.user.email;
-    var data = {}
-    ref.orderByChild('email').equalTo(emailUser).once('value', (snapshot) => {
-      data = Object.values(snapshot.val())[0];
-      res.status(200).json({ message: 'Login successful', error: null, accessToken: accessToken, dataUser: data });
+    const snapshot = await ref.where('email', '==', emailUser).get();
+    if (snapshot.empty) {
+        res.status(200).json({ message: 'Invalid password/email', error: null, data: null});
+        return;
+    }
+    snapshot.forEach(doc => {
+        id = doc.id
+        data = doc.data()
     });
+    res.status(200).json({ message: 'Login successful', error: null, accessToken: accessToken, dataUser: data });
 
   } catch (error) {
     res.status(401).json({ message: 'Login Error', error: error.message });
