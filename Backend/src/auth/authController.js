@@ -1,4 +1,6 @@
+const firebase = require('firebase/app');
 const { getFirestore } = require('firebase-admin/firestore');
+
 require('../utils/firebase-config.js');
 require('firebase/database');
 
@@ -13,15 +15,14 @@ exports.registerUser = async (req, res) => {
     // Create a new user in Firebase Authentication
     await firebase.auth().createUserWithEmailAndPassword(email, password);
 
-    // Add to Firestore
     const userData = {
       name: name,
       email: email,
       point: 0,
       profile_pic: null
-  }
+    }
 
-  await ref.add(userData);
+    await ref.add(userData);
 
     res.status(201).json({ message: 'User registered successfully', error: null });
   } catch (error) {
