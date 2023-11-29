@@ -10,19 +10,19 @@ exports.insertRoomType = async (req, res) => {
         const { roomTypeId, type, description, price } = req.body;
   
         if (roomTypeId == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert room. Room type\'s id cannot be empty', error: error.message });
+            res.status(http.StatusNoContent).json({ message: 'Failed to insert room type. Room type\'s id cannot be empty', error: error.message });
             return
         }
         if (type == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert room. Room type cannot be empty', error: error.message });
+            res.status(http.StatusNoContent).json({ message: 'Failed to insert room type. Room type cannot be empty', error: error.message });
             return
         }
         if (description == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert room. Description cannot be empty', error: error.message });
+            res.status(http.StatusNoContent).json({ message: 'Failed to insert room type. Description cannot be empty', error: error.message });
             return
         }
         if (price == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert room. Price cannot be empty', error: error.message });
+            res.status(http.StatusNoContent).json({ message: 'Failed to insert room type. Price cannot be empty', error: error.message });
             return
         }
   
