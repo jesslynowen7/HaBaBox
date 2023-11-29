@@ -5,7 +5,7 @@ require('firebase/database');
 const db = getFirestore();
 const ref = db.collection('room_types');
 
-exports.insertTransaction = async (req, res) => {
+exports.insertRoomType = async (req, res) => {
     try {
         const { id, type, description, price } = req.body;
   
