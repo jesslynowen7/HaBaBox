@@ -22,7 +22,7 @@ exports.updateProfilePicture = async (req, res) => {
             email: oldData.email,
             name: oldData.name,
             point: oldData.point,
-            profile_pic: profilePic,
+            profilePic: profilePic,
         }
         
         await ref.doc(id).update(newDataMember);
@@ -49,7 +49,7 @@ exports.updateMemberPoints = async (req, res) => {
             email: oldData.email,
             name: oldData.name,
             point: points,
-            profile_pic: oldData.profile_pic,
+            profilePic: oldData.profilePic,
         }
         
         await ref.doc(id).update(newDataMember);
