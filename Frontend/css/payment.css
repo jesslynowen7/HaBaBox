@@ -1,0 +1,264 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap");
+
+.image-radio {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Center items horizontally */
+  margin: 5px;
+  gap: 5px;
+  cursor: pointer;
+}
+
+#progress_bar {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: center;
+  font-size: 1.1em;
+  padding: 15px 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.teks-checkout,
+.teks-review,
+.teks-success {
+  opacity: 0.5;
+}
+
+#bank-grid,
+#emoney-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns with equal width */
+}
+
+#bank,
+#e-money,
+#order-div,
+#diskon-div,
+#rincian-harga {
+  background-color: #2db6b6;
+  height: 100%;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  padding: 20px;
+}
+
+#payment-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#right-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#group-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin: auto;
+  padding-left: 10px;
+}
+
+#order-id-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#order-id-num {
+  text-align: right;
+}
+
+#order-div > h3 {
+  border-top: 1px solid #428787;
+  border-bottom: 1px solid #428787;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#order-grid-nest {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-top: 10px;
+}
+
+#payment-check-in,
+#payment-check-out,
+#payment-duration {
+  text-align: center;
+}
+
+#payment-check-out {
+  border-left: 1px solid #428787;
+  border-right: 1px solid #428787;
+}
+
+#diskon-div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#promo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  color: #428787;
+  padding: 10px;
+}
+
+#choose-promo {
+  background-color: #249292;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#coin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  color: #428787;
+  padding: 10px;
+}
+
+#choose-point {
+  border: none;
+  color: #249292;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 1em;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#rincian-harga {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#rincian-harga > h4 {
+  border-bottom: 1px solid #428787;
+  padding-bottom: 5px;
+}
+
+#order-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#date-room-ordered {
+  font-size: 0.7em;
+}
+
+#habapoint-div,
+#voucher-div,
+#total-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#pay-button {
+  border: none;
+  padding: 5px 0;
+  color: #249292;
+  font-weight: bold;
+  font-size: 1em;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.promo-popup {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 30px 30px;
+  padding-top: 10px;
+  border-radius: 20px;
+  background-color: #249292;
+  color: white;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.1);
+  transition: transform 0.4s, top 0.4s;
+}
+
+.open-popup {
+  top: 50%;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#grid-promo-popup > button {
+  width: 80px;
+  padding: 2px;
+}
+
+#grid-promo-popup > input {
+  padding: 2px;
+}
+
+#promo-box {
+  background-color: white;
+}
+
+#promo-popup-header,
+#header-popup-point {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#close-promo-popup,
+#close-popup-point {
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-weight: bolder;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.point-popup {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  gap: 10px;
+  padding: 0 30px 30px;
+  padding-top: 10px;
+  border-radius: 20px;
+  background-color: #249292;
+  visibility: hidden;
+  color: white;
+  transform: translate(-50%, -50%);
+  transition: transform 0.4s, top 0.4s;
+}
+
+#point-popup-confirm-button {
+  border: none;
+  color: #249292;
+  text-decoration: underline;
+  padding: 5px 20px;
+  font-weight: bold;
+}
+
+#popup-input-poin {
+  padding: 4px 15px;
+}
+
+.open-popup-point {
+  top: 50%;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
