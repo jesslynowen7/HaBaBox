@@ -5,30 +5,30 @@ require('firebase/database');
 const db = getFirestore();
 const ref = db.collection('room_types');
 
-exports.insertTransaction = async (req, res) => {
+exports.insertRoomType = async (req, res) => {
     try {
-        const { id, type, description, price } = req.body;
+        const { roomTypeId, type, description, price } = req.body;
   
-        if (id == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert room. Room type\'s id cannot be empty', error: error.message });
+        if (roomTypeId == "") {
+            res.status(http.StatusNoContent).json({ message: 'Failed to insert room type. Room type\'s id cannot be empty', error: error.message });
             return
         }
         if (type == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert room. Room type cannot be empty', error: error.message });
+            res.status(http.StatusNoContent).json({ message: 'Failed to insert room type. Room type cannot be empty', error: error.message });
             return
         }
         if (description == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert room. Description cannot be empty', error: error.message });
+            res.status(http.StatusNoContent).json({ message: 'Failed to insert room type. Description cannot be empty', error: error.message });
             return
         }
         if (price == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert room. Price cannot be empty', error: error.message });
+            res.status(http.StatusNoContent).json({ message: 'Failed to insert room type. Price cannot be empty', error: error.message });
             return
         }
   
         // Add to firestore
         const roomTypeData = {
-            id: id,
+            id: roomTypeId,
             type: type,
             description: description,
             price: price,
@@ -43,9 +43,9 @@ exports.insertTransaction = async (req, res) => {
 
 exports.updateRoomType = async (req, res) => {
     try {
-        const { id, type, description, price } = req.body;
-        const roomTypeId = req.params['roomTypeId']
-        const snapshot = await ref.where('id', '==', roomTypeId).get();
+        const { roomTypeId, type, description, price } = req.body;
+        const currentId = req.params['roomTypeId']
+        const snapshot = await ref.where('id', '==', currentId).get();
         if (snapshot.empty) {
             res.status(200).json({ message: 'Room type not found', error: null, data: null});
             return;
@@ -55,8 +55,8 @@ exports.updateRoomType = async (req, res) => {
             oldData = doc.data()
         });
     
-        if (id != "") {
-            oldData.id = id
+        if (roomTypeId != "") {
+            oldData.id = roomTypeId
         }
         if (type != "") {
             oldData.type = type
@@ -83,8 +83,8 @@ exports.updateRoomType = async (req, res) => {
 
 exports.deleteRoomType = async (req, res) => {
     try {
-        const id = req.params['id']
-        const snapshot = await ref.where('id', '==', id).get()
+        const roomTypeId = req.params['roomTypeId']
+        const snapshot = await ref.where('id', '==', roomTypeId).get()
         if (snapshot.empty) {
             res.status(200).json({ message: 'Room type not found', error: null, data: null});
             return;

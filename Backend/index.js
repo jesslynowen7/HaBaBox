@@ -3,8 +3,10 @@ const app = express();
 const authRoutes = require('./src/auth');
 const hotelRoutes = require('./src/hotel');
 const roomRoutes = require('./src/room');
-const roomTypeRoutes = require('./src/roomType');
+const roomTypeRoutes = require('./src/room_type');
 const transactionRoutes = require('./src/transaction');
+const memberRoutes = require('./src/member');
+const eTicketRoutes = require('./src/e_ticket');
 
 // Middlewares
 app.use(express.urlencoded({ extended: false }));
@@ -14,8 +16,10 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/hotel', hotelRoutes);
 app.use('/room', roomRoutes);
-app.use('/roomType', roomTypeRoutes);
+app.use('/room_type', roomTypeRoutes);
 app.use('/transaction', transactionRoutes);
+app.use('/member', memberRoutes);
+app.use('/e_ticket', eTicketRoutes);
 // app.use('/', progressRoutes);
 
 // Default route

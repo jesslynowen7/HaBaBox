@@ -7,11 +7,11 @@ const ref = db.collection('transactions');
 
 exports.insertTransaction = async (req, res) => {
     try {
-        const { memberId, roomId, promoCode, transactionDate, checkinDate,
+        const { email, roomId, promoCode, checkinDate,
             checkoutDate, duration, totalPrice } = req.body;
 
-        if (memberId == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert transaction. Member\'s id cannot be empty', error: error.message });
+        if (email == "") {
+            res.status(http.StatusNoContent).json({ message: 'Failed to insert transaction. Email cannot be empty', error: error.message });
             return
         }
         if (roomId == "") {
@@ -20,10 +20,6 @@ exports.insertTransaction = async (req, res) => {
         }
         if (promoCode == "") {
             res.status(http.StatusNoContent).json({ message: 'Failed to insert transaction. Promo code cannot be empty', error: error.message });
-            return
-        }
-        if (transactionDate == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert transaction. Transaction date cannot be empty', error: error.message });
             return
         }
         if (checkinDate == "") {
@@ -45,10 +41,10 @@ exports.insertTransaction = async (req, res) => {
   
         // Add to firestore
         const transactionData = {
-            memberId: memberId,
+            email: email,
             roomId: roomId,
             promoCode: promoCode,
-            transactionDate: transactionDate,
+            transactionDate: getCurrentDate(),
             checkinDate: checkinDate,
             checkoutDate: checkoutDate,
             duration: duration,
@@ -65,7 +61,7 @@ exports.insertTransaction = async (req, res) => {
 
 exports.updateTransaction = async (req, res) => {
     try {
-        const { memberId, roomId, promoCode, transactionDate, checkinDate,
+        const { email, roomId, promoCode, transactionDate, checkinDate,
             checkoutDate, duration, totalPrice, status } = req.body;
         const currentTransationId = req.params['transactionId']
         const snapshot = await ref.get(currentTransationId);
@@ -78,8 +74,8 @@ exports.updateTransaction = async (req, res) => {
             oldData = doc.data()
         });
     
-        if (memberId != "") {
-            oldData.memberId = memberId
+        if (email != "") {
+            oldData.email = email
         }
         if (roomId != "") {
             oldData.roomId = roomId
@@ -106,7 +102,7 @@ exports.updateTransaction = async (req, res) => {
             oldData.status = status
         }
         const newDataTransaction = {
-            memberId: oldData.memberId,
+            email: oldData.email,
             roomId: oldData.roomId,            
             promoCode: oldData.promoCode,
             transactionDate: oldData.transactionDate,
@@ -117,7 +113,7 @@ exports.updateTransaction = async (req, res) => {
             status: oldData.status,
         }
     
-        await ref.doc(currentTransationId).update(newDataTransaction);
+        await ref.doc(id).update(newDataTransaction);
         res.status(200).json({ message: 'Transaction updated successfully', error: null, data: newDataTransaction });
     } catch (error) {
         res.status(500).json({ message: 'Failed to update transaction', error: error.message });
@@ -159,10 +155,10 @@ exports.getTransactionByTransactionId = async (req, res) => {
     }
 }
 
-exports.getTransactionsByMemberId = async (req, res) => {
+exports.getTransactionsByEmail = async (req, res) => {
     try {
-        const memberId = req.params['memberId']
-        const snapshot = await ref.where('memberId', '==', memberId).get();
+        const email = req.params['email']
+        const snapshot = await ref.where('email', '==', email).get();
         const dataArr = [];
         if (snapshot.empty) {
             res.status(200).json({ message: 'No transaction found', error: null, data: null});
@@ -178,4 +174,14 @@ exports.getTransactionsByMemberId = async (req, res) => {
     } catch (error) {
         res.status(401).json({ message: 'Failed to get transaction', error: error.message });
     }
+}
+
+function getCurrentDate() {
+    const currentDate = new Date();
+
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear();
+
+    return `${day}/${month}/${year}`
 }
