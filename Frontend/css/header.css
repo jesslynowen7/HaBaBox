@@ -4,11 +4,12 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 .header_container {
+  position: sticky;
+  top:0;
+  color: white;
   height: 10vh;
   background-color: #00afaa;
   display: flex;
@@ -21,6 +22,9 @@ body {
   align-items: center;
   flex-direction: row;
   padding-left: 20%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
 #container_logo {
@@ -36,6 +40,7 @@ body {
 #logo_icon {
   display: flex;
   align-items: center;
+  color: white;
   gap: 5px;
   text-decoration: none;
 }
