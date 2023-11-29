@@ -7,7 +7,7 @@ const ref = db.collection('transactions');
 
 exports.insertTransaction = async (req, res) => {
     try {
-        const { email, roomId, promoCode, transactionDate, checkinDate,
+        const { email, roomId, promoCode, checkinDate,
             checkoutDate, duration, totalPrice } = req.body;
 
         if (email == "") {
@@ -20,10 +20,6 @@ exports.insertTransaction = async (req, res) => {
         }
         if (promoCode == "") {
             res.status(http.StatusNoContent).json({ message: 'Failed to insert transaction. Promo code cannot be empty', error: error.message });
-            return
-        }
-        if (transactionDate == "") {
-            res.status(http.StatusNoContent).json({ message: 'Failed to insert transaction. Transaction date cannot be empty', error: error.message });
             return
         }
         if (checkinDate == "") {
@@ -48,7 +44,7 @@ exports.insertTransaction = async (req, res) => {
             email: email,
             roomId: roomId,
             promoCode: promoCode,
-            transactionDate: transactionDate,
+            transactionDate: getCurrentDate(),
             checkinDate: checkinDate,
             checkoutDate: checkoutDate,
             duration: duration,
@@ -178,4 +174,14 @@ exports.getTransactionsByEmail = async (req, res) => {
     } catch (error) {
         res.status(401).json({ message: 'Failed to get transaction', error: error.message });
     }
+}
+
+function getCurrentDate() {
+    const currentDate = new Date();
+
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear();
+
+    return `${day}/${month}/${year}`
 }
