@@ -9,23 +9,6 @@ exports.insertHotel = async (req, res) => {
   try {
     const { name, address, city, phone } = req.body;
 
-    if (name == "") {
-        res.status(http.StatusNoContent).json({ message: 'Failed to insert hotel. Hotel\'s name cannot empty', error: error.message });
-		return
-	}
-    if (address == "") {
-        res.status(http.StatusNoContent).json({ message: 'Failed to insert hotel. Hotel\'s address cannot empty', error: error.message });
-		return
-	}
-    if (city == "") {
-        res.status(http.StatusNoContent).json({ message: 'Failed to insert hotel. Hotel\'s city cannot empty', error: error.message });
-		return
-	}
-    if (phone == "") {
-        res.status(http.StatusNoContent).json({ message: 'Failed to insert hotel. Hotel\'s phone number cannot empty', error: error.message });
-		return
-	}
-
     // Add to firestore
     const hotelData = {
         name: name,
@@ -58,13 +41,13 @@ exports.updateHotel = async (req, res) => {
     if (name != "") {
         oldData.name = name
 	}
-    if (address == "") {
+    if (address != "") {
         oldData.address = address
 	}
-    if (city == "") {
+    if (city != "") {
         oldData.city = city
 	}
-    if (phone == "") {
+    if (phone != "") {
         oldData.phone = phone
 	}
     const newDataHotel = {

@@ -1,25 +1,27 @@
-const firebase = require('firebase/app');
-const admin = require('firebase-admin');
+const { getFirestore } = require('firebase-admin/firestore');
 require('../utils/firebase-config.js');
 require('firebase/database');
 
-const db = admin.database();
-const ref = db.ref('/users');
+const db = getFirestore();
+const ref = db.collection('users');
 
 // Register a new user
 exports.registerUser = async (req, res) => {
   try {
-    const { name, email, password, allergies } = req.body;
+    const { name, email, password } = req.body;
 
     // Create a new user in Firebase Authentication
     await firebase.auth().createUserWithEmailAndPassword(email, password);
 
-    // Add to realtime database
-    const newUserRef = ref.push();
-    await newUserRef.set({
+    // Add to Firestore
+    const userData = {
       name: name,
-      email: email
-    });
+      email: email,
+      point: 0,
+      profile_pic: null
+  }
+
+  await ref.add(userData);
 
     res.status(201).json({ message: 'User registered successfully', error: null });
   } catch (error) {
@@ -33,11 +35,11 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     // Sign in the user with Firebase Authentication
-    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);;
+    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
 
     // Generate an access token
     const accessToken = await userCredential.user.getIdToken();
-    const emailUser = userCredential.user.providerData[0].email;
+    const emailUser = userCredential.user.email;
     var data = {}
     ref.orderByChild('email').equalTo(emailUser).once('value', (snapshot) => {
       data = Object.values(snapshot.val())[0];
