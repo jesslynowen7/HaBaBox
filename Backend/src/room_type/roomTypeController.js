@@ -7,9 +7,9 @@ const ref = db.collection('room_types');
 
 exports.insertRoomType = async (req, res) => {
     try {
-        const { id, type, description, price } = req.body;
+        const { roomTypeId, type, description, price } = req.body;
   
-        if (id == "") {
+        if (roomTypeId == "") {
             res.status(http.StatusNoContent).json({ message: 'Failed to insert room. Room type\'s id cannot be empty', error: error.message });
             return
         }
@@ -28,7 +28,7 @@ exports.insertRoomType = async (req, res) => {
   
         // Add to firestore
         const roomTypeData = {
-            id: id,
+            id: roomTypeId,
             type: type,
             description: description,
             price: price,
@@ -43,9 +43,9 @@ exports.insertRoomType = async (req, res) => {
 
 exports.updateRoomType = async (req, res) => {
     try {
-        const { id, type, description, price } = req.body;
-        const roomTypeId = req.params['roomTypeId']
-        const snapshot = await ref.where('id', '==', roomTypeId).get();
+        const { roomTypeId, type, description, price } = req.body;
+        const currentId = req.params['roomTypeId']
+        const snapshot = await ref.where('id', '==', currentId).get();
         if (snapshot.empty) {
             res.status(200).json({ message: 'Room type not found', error: null, data: null});
             return;
@@ -55,8 +55,8 @@ exports.updateRoomType = async (req, res) => {
             oldData = doc.data()
         });
     
-        if (id != "") {
-            oldData.id = id
+        if (roomTypeId != "") {
+            oldData.id = roomTypeId
         }
         if (type != "") {
             oldData.type = type
@@ -83,8 +83,8 @@ exports.updateRoomType = async (req, res) => {
 
 exports.deleteRoomType = async (req, res) => {
     try {
-        const id = req.params['id']
-        const snapshot = await ref.where('id', '==', id).get()
+        const roomTypeId = req.params['roomTypeId']
+        const snapshot = await ref.where('id', '==', roomTypeId).get()
         if (snapshot.empty) {
             res.status(200).json({ message: 'Room type not found', error: null, data: null});
             return;
