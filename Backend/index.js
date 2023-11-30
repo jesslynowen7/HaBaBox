@@ -7,6 +7,7 @@ const roomTypeRoutes = require('./src/room_type');
 const transactionRoutes = require('./src/transaction');
 const memberRoutes = require('./src/member');
 const eTicketRoutes = require('./src/e_ticket');
+const promoRoutes = require('./src/promo');
 
 // Middlewares
 app.use(express.urlencoded({ extended: false }));
@@ -20,6 +21,7 @@ app.use('/room_type', roomTypeRoutes);
 app.use('/transaction', transactionRoutes);
 app.use('/member', memberRoutes);
 app.use('/e_ticket', eTicketRoutes);
+app.use('/promo', promoRoutes);
 // app.use('/', progressRoutes);
 
 // Default route
