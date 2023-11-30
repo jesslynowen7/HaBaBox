@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Hababox
+    </title>
+    <link rel="icon" href="images/LogoHBB.svg">
+    <meta name="description" content="Hababox Booking Page" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+    <!--Replace with your tailwind.css once created-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+    <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
+  </head>
+
+  <body>
+    <div class="w-1/2 container mx-auto items-center mt-5">
+      <div class="flex mb-4">
+        <div class="w-1/4 bg-gray-400 h-12 pr-1.5 rounded-l-full">
+          <select class="block appearance-none w-full h-full rounded-l-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+            <option>New Mexico</option>
+            <option>Missouri</option>
+            <option>Texas</option>
+          </select>
+        </div>
+        <div class="w-1/4 bg-gray-400 h-12 pr-1.5">
+          <input type="date" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="checkin" name="checkin" placeholder="Check In" required>
+        </div>
+        <div class="w-1/5 bg-gray-400 h-12 pr-1.5">
+          <input type="number" class="appearance-none block w-full h-full bg-gray-200 text-gray-700 border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="1 night">
+        </div>
+        <div class="w-1/4 bg-gray-400 h-12 pr-1.5">
+          <input type="date" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="checkout" name="checkout" placeholder="Check Out" required>
+        </div>
+        <div class="w-14 bg-gray-50 h-12 rounded-r-full">
+          <input type="image" src="images/icon_search.svg" alt="Submit" class="my-1 mx-1.5 w-8/12 h-8/12">
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full max-w-xs">
+      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+            Username
+          </label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+            Password
+          </label>
+          <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************">
+          <p class="text-red-500 text-xs italic">Please choose a password.</p>
+        </div>
+        <div class="flex items-center justify-between">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+            Sign In
+          </button>
+          <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+            Forgot Password?
+          </a>
+        </div>
+      </form>
+      <p class="text-center text-gray-500 text-xs">
+        &copy;2020 Acme Corp. All rights reserved.
+      </p>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body>
+    <!-- Include the header -->
+    <div id="header-container"></div>
+
+    <div id="content-container">
+        <div id="nav-menu">
+            <img width="64px" height="64px" src="images/default_pfp.jpeg" alt="pfp">
+            <h2 id="nama_user">Name</h2>
+            <p id="habapoints">Habapoints</p>
+            <form id="form_menu" action="#">
+                <label>
+                    <input type="radio" id="my_stay" name="pilihan_menu" value="my_stay" checked="true">
+                    My Stay
+                </label>
+
+                <label>
+                    <input type="radio" id="my_book" name="pilihan_menu" value="my_book">
+                    My Book
+                </label>
+
+                <label>
+                    <input type="radio" id="history" name="pilihan_menu" value="history">
+                    History
+                </label>
+
+                <label>
+                    <input type="radio" id="points" name="pilihan_menu" value="points">
+                    Points
+                </label>
+
+                <label>
+                    <input type="radio" id="edit_profile" name="pilihan_menu" value="edit_profile">
+                    Edit Profile
+                </label>
+
+                <input id="logout_button" type="button" onclick="openPopup()" value="Logout">
+                <div class="popup" id="popup">
+                    <img src="images/question_mark.png" alt="?">
+                    <h2>Are you sure?</h2>
+                    <p>You will be logged out of your account!</p>
+                    <button onclick="closePopup()">Cancel</button>
+                    <button>Confirm</button> <!-- Tambahin fungsi buat logout klo press confirm -->
+                </div>
+            </form>
+        </div>
+        <div id="isi_menu">
+
+        </div>
+    </div>
+
+    <!-- Include the footer -->
+    <div id="footer-container"></div>
+</body>
+<script src="javascript/include_header_footer.js"></script>
+<script>
+    // Add event listener for logout confirmation
+    let popup = document.getElementById("popup");
+    function openPopup() {
+        popup.classList.add("open-popup");
+    }
+    function closePopup() {
+        popup.classList.remove("open-popup");
+    }
+    // Add event listener to radio buttons
+    document.getElementById('form_menu').addEventListener('change', function (event) {
+        if (event.target.type === 'radio' && event.target.checked) {
+            // Handle the selected radio button
+            const selectedValue = event.target.value;
+            updateIsiMenu(selectedValue);
+        }
+    });
+
+    // Function to update isi_menu based on the selected radio button
+    function updateIsiMenu(selectedValue) {
+        const isiMenuDiv = document.getElementById('isi_menu');
+
+        fetch(`${selectedValue}.html`)
+            .then(response => response.text())
+            .then(html => {
+                isiMenuDiv.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading HTML template:', error);
+                isiMenuDiv.innerHTML = 'Error loading content';
+            });
+    }
+
+    // Initial call to update isi_menu with the default checked value
+    const defaultCheckedValue = document.querySelector('input[name="pilihan_menu"]:checked').value;
+    updateIsiMenu(defaultCheckedValue);
+
+    // Event listener for the logout button
+    document.getElementById('logout_button').addEventListener('click', function () {
+        // Display a confirmation dialog
+        const confirmed = confirm('Are you sure you want to logout?');
+
+        // If the user confirms, perform the logout action
+        if (confirmed) {
+            // Add your logout logic here
+            console.log('User confirmed logout. Implement your logout logic.');
+        }
+    });
+</script>
+
+</html>
