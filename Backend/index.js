@@ -5,7 +5,7 @@ const hotelRoutes = require('./src/hotel');
 const roomRoutes = require('./src/room');
 const roomTypeRoutes = require('./src/room_type');
 const transactionRoutes = require('./src/transaction');
-const memberRoutes = require('./src/member');
+const userRoutes = require('./src/user');
 const eTicketRoutes = require('./src/e_ticket');
 const promoRoutes = require('./src/promo');
 
@@ -19,7 +19,7 @@ app.use('/hotel', hotelRoutes);
 app.use('/room', roomRoutes);
 app.use('/room_type', roomTypeRoutes);
 app.use('/transaction', transactionRoutes);
-app.use('/member', memberRoutes);
+app.use('/user', userRoutes);
 app.use('/e_ticket', eTicketRoutes);
 app.use('/promo', promoRoutes);
 // app.use('/', progressRoutes);
