@@ -1,12 +1,16 @@
 // Fetch and include header.html
-fetch("../Frontend/header.html")
+fetch("../Frontend/header.html", {
+  mode: "no-cors",
+})
   .then((response) => response.text())
   .then((html) => {
     document.getElementById("header-container").innerHTML = html;
   });
 
 // Fetch and include footer.html
-fetch("../Frontend/footer.html")
+fetch("../Frontend/footer.html", {
+  mode: "no-cors",
+})
   .then((response) => response.text())
   .then((html) => {
     document.getElementById("footer-container").innerHTML = html;

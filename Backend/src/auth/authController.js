@@ -1,11 +1,11 @@
-const firebase = require('firebase/app');
-const { getFirestore } = require('firebase-admin/firestore');
+const firebase = require("firebase/app");
+const { getFirestore } = require("firebase-admin/firestore");
 
-require('../utils/firebase-config.js');
-require('firebase/database');
+require("../utils/firebase-config.js");
+require("firebase/database");
 
 const db = getFirestore();
-const ref = db.collection('users');
+const ref = db.collection("users");
 
 // Register a new user
 exports.registerUser = async (req, res) => {
@@ -19,14 +19,24 @@ exports.registerUser = async (req, res) => {
       name: name,
       email: email,
       point: 0,
+<<<<<<< HEAD
       profilePic: null
     }
+=======
+      profile_pic: null,
+      userType: "Member",
+    };
+>>>>>>> 3d46698 (Test)
 
     await ref.add(userData);
 
-    res.status(201).json({ message: 'User registered successfully', error: null });
+    res
+      .status(201)
+      .json({ message: "User registered successfully", error: null });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to register user', error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to register user", error: error.message });
   }
 };
 
@@ -36,24 +46,44 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     // Sign in the user with Firebase Authentication
-    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+    const userCredential = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
 
     // Generate an access token
     const accessToken = await userCredential.user.getIdToken();
     const emailUser = userCredential.user.email;
-    const snapshot = await ref.where('email', '==', emailUser).get();
+    const snapshot = await ref.where("email", "==", emailUser).get();
     if (snapshot.empty) {
-        res.status(200).json({ message: 'Invalid password/email', error: null, data: null});
-        return;
+      res
+        .status(200)
+        .json({ message: "Invalid password/email", error: null, data: null });
+      return;
     }
-    snapshot.forEach(doc => {
-        id = doc.id
-        data = doc.data()
+    snapshot.forEach((doc) => {
+      id = doc.id;
+      data = doc.data();
     });
-    res.status(200).json({ message: 'Login successful', error: null, accessToken: accessToken, dataUser: data });
-
+    res
+      .status(200)
+      .json({
+        message: "Login successful",
+        error: null,
+        accessToken: accessToken,
+        dataUser: data,
+      })
+      .cookie("token", customToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "Strict",
+      });
+    res.cookie("userType", user.userType, {
+      httpOnly: false,
+      secure: true,
+      sameSite: "Strict",
+    });
   } catch (error) {
-    res.status(401).json({ message: 'Login Error', error: error.message });
+    res.status(401).json({ message: "Login Error", error: error.message });
   }
 };
 
@@ -63,8 +93,12 @@ exports.logoutUser = async (req, res) => {
     // Sign out the user from Firebase Authentication
     await firebase.auth().signOut();
 
-    res.status(200).json({ message: 'User logged out successfully', error: null });
+    res
+      .status(200)
+      .json({ message: "User logged out successfully", error: null });
   } catch (error) {
-    res.status(500).json({ message: 'Failed to log out user', error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to log out user", error: error.message });
   }
 };

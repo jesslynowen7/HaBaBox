@@ -9,11 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
-    "firebase": "^8.6.8",
-    "firebase-admin": "^11.8.0",
+    "firebase": "^8.10.1",
+    "firebase-admin": "^11.11.1",
     "firebase-function": "^1.4.37",
-    "nodemon": "^2.0.22"
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.0.1"
   },
   "description": ""
 }
