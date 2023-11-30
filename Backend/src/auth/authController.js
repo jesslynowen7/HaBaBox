@@ -64,23 +64,19 @@ exports.loginUser = async (req, res) => {
       id = doc.id;
       data = doc.data();
     });
-    res
-      .status(200)
-      .json({
-        message: "Login successful",
-        error: null,
-        accessToken: accessToken,
-        dataUser: data,
-      })
-      .cookie("token", customToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "Strict",
-      });
-    res.cookie("userType", user.userType, {
-      httpOnly: false,
+    // Set cookies before sending the response
+    res.cookie("token", accessToken, {
+      httpOnly: true,
       secure: true,
       sameSite: "Strict",
+    });
+
+    // Send the response after setting the cookies
+    res.status(200).json({
+      message: "Login successful",
+      error: null,
+      accessToken: accessToken,
+      dataUser: data,
     });
   } catch (error) {
     res.status(401).json({ message: "Login Error", error: error.message });

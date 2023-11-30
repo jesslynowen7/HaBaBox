@@ -29,23 +29,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Middleware to check and verify the Firebase ID token
-const verifyToken = async (req, res, next) => {
-  const idToken = req.cookies.token;
-
-  if (!idToken) {
-    return res.status(401).json({ message: "Token is missing" });
-  }
-
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    req.user = decodedToken;
-    next();
-  } catch (error) {
-    return res.status(401).json({ message: "Invalid token" });
-  }
-};
-
 // API routes
 <<<<<<< HEAD
 app.use('/auth', authRoutes);
@@ -58,8 +41,8 @@ app.use('/e_ticket', eTicketRoutes);
 app.use('/promo', promoRoutes);
 =======
 app.use("/auth", authRoutes);
-app.use("/hotel", verifyToken, hotelRoutes);
-app.use("/room", verifyToken, roomRoutes);
+app.use("/hotel", hotelRoutes);
+app.use("/room", roomRoutes);
 app.use("/room_type", roomTypeRoutes);
 app.use("/transaction", transactionRoutes);
 app.use("/member", memberRoutes);
