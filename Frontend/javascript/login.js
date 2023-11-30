@@ -15,6 +15,7 @@ async function login() {
   if (response.ok) {
     // Successful login, handle the result as needed
     console.log(result);
+    window.location.href = "index.html";
   } else {
     // Failed login, handle the error
     console.error(result);

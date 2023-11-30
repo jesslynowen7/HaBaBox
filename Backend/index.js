@@ -8,7 +8,6 @@ const transactionRoutes = require("./src/transaction");
 const memberRoutes = require("./src/member");
 const eTicketRoutes = require("./src/e_ticket");
 const cors = require("cors");
-const cookieParser = require("cookie-parser");
 
 // Enable CORS for all routes
 app.use(cors());
@@ -16,7 +15,6 @@ app.use(cors());
 // Middlewares
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser());
 
 // API routes
 app.use("/auth", authRoutes);

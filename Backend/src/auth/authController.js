@@ -48,6 +48,7 @@ exports.loginUser = async (req, res) => {
     // Generate an access token
     const accessToken = await userCredential.user.getIdToken();
     const emailUser = userCredential.user.email;
+    var data = {};
     const snapshot = await ref.where("email", "==", emailUser).get();
     if (snapshot.empty) {
       res
@@ -59,14 +60,6 @@ exports.loginUser = async (req, res) => {
       id = doc.id;
       data = doc.data();
     });
-    // Set cookies before sending the response
-    res.cookie("token", accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "Strict",
-    });
-
-    // Send the response after setting the cookies
     res.status(200).json({
       message: "Login successful",
       error: null,
