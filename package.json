@@ -18,5 +18,10 @@
   "homepage": "https://github.com/jesslynowen7/HaBaBox#readme",
   "devDependencies": {
     "tailwindcss": "^3.3.5"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "firebase": "^10.7.0",
+    "firebase-admin": "^11.11.1"
   }
 }
