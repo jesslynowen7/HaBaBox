@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+<<<<<<< HEAD
 const authRoutes = require("./src/auth");
 const hotelRoutes = require("./src/hotel");
 const roomRoutes = require("./src/room");
@@ -11,12 +12,23 @@ const cors = require("cors");
 
 // Enable CORS for all routes
 app.use(cors());
+=======
+const authRoutes = require('./src/auth');
+const hotelRoutes = require('./src/hotel');
+const roomRoutes = require('./src/room');
+const roomTypeRoutes = require('./src/room_type');
+const transactionRoutes = require('./src/transaction');
+const userRoutes = require('./src/user');
+const eTicketRoutes = require('./src/e_ticket');
+const promoRoutes = require('./src/promo');
+>>>>>>> main
 
 // Middlewares
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // API routes
+<<<<<<< HEAD
 app.use("/auth", authRoutes);
 app.use("/hotel", hotelRoutes);
 app.use("/room", roomRoutes);
@@ -24,6 +36,16 @@ app.use("/room_type", roomTypeRoutes);
 app.use("/transaction", transactionRoutes);
 app.use("/member", memberRoutes);
 app.use("/e_ticket", eTicketRoutes);
+=======
+app.use('/auth', authRoutes);
+app.use('/hotel', hotelRoutes);
+app.use('/room', roomRoutes);
+app.use('/room_type', roomTypeRoutes);
+app.use('/transaction', transactionRoutes);
+app.use('/user', userRoutes);
+app.use('/e_ticket', eTicketRoutes);
+app.use('/promo', promoRoutes);
+>>>>>>> main
 // app.use('/', progressRoutes);
 
 // Default route

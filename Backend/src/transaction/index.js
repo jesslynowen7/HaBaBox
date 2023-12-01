@@ -10,6 +10,6 @@ router.put('/:transactionId', updateTransaction);
 router.post('/', insertTransaction);
 router.delete('/:transactionId', deleteTransaction);
 router.get('/:transactionId', getTransactionByTransactionId)
-router.get('/member/:email', getTransactionsByEmail)
+router.get('/user/:email', getTransactionsByEmail)
 
 module.exports = router;
