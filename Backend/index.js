@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 const express = require("express");
 const app = express();
 <<<<<<< HEAD
@@ -61,3 +62,5 @@ app.listen(PORT, () => {
 });
 =======
 >>>>>>> 40e7409 (reset index)
+=======
+>>>>>>> 40e74092a809f7068742a3edb646c4b21bcee86f

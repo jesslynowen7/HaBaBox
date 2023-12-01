@@ -20,6 +20,7 @@ exports.registerUser = async (req, res) => {
       email: email,
       point: 0,
 <<<<<<< HEAD
+<<<<<<< HEAD
       profilePic: null
     }
 =======
@@ -27,6 +28,15 @@ exports.registerUser = async (req, res) => {
       userType: "Member",
     };
 >>>>>>> 3d46698 (Test)
+=======
+      profile_pic: null,
+      userType: "Member",
+    };
+=======
+      profilePic: null
+    }
+>>>>>>> main
+>>>>>>> 40e74092a809f7068742a3edb646c4b21bcee86f
 
     await ref.add(userData);
 
