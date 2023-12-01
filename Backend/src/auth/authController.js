@@ -19,24 +19,8 @@ exports.registerUser = async (req, res) => {
       name: name,
       email: email,
       point: 0,
-<<<<<<< HEAD
-<<<<<<< HEAD
-      profilePic: null
-    }
-=======
-      profile_pic: null,
-      userType: "Member",
+      profilePic: null,
     };
->>>>>>> 3d46698 (Test)
-=======
-      profile_pic: null,
-      userType: "Member",
-    };
-=======
-      profilePic: null
-    }
->>>>>>> main
->>>>>>> 40e74092a809f7068742a3edb646c4b21bcee86f
 
     await ref.add(userData);
 
@@ -63,7 +47,6 @@ exports.loginUser = async (req, res) => {
     // Generate an access token
     const accessToken = await userCredential.user.getIdToken();
     const emailUser = userCredential.user.email;
-    var data = {};
     const snapshot = await ref.where("email", "==", emailUser).get();
     if (snapshot.empty) {
       res

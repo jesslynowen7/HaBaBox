@@ -6,260 +6,232 @@ const db = getFirestore();
 const ref = db.collection("rooms");
 
 exports.insertRoom = async (req, res) => {
-  if (req.user.userType === "Admin") {
-    try {
-      const { roomId, roomTypeId, hotelName, roomNumber } = req.body;
+  try {
+    const { roomId, roomTypeId, hotelName, roomNumber } = req.body;
 
-      if (roomId == "") {
-        res.status(http.StatusNoContent).json({
-          message: "Failed to insert room. Room's id cannot be empty",
-          error: error.message,
-        });
-        return;
-      }
-      if (roomTypeId == "") {
-        res.status(http.StatusNoContent).json({
-          message: "Failed to insert room. Room type's id cannot be empty",
-          error: error.message,
-        });
-        return;
-      }
-      if (hotelName == "") {
-        res.status(http.StatusNoContent).json({
-          message: "Failed to insert room. Hotel's id cannot be empty",
-          error: error.message,
-        });
-        return;
-      }
-      if (roomNumber == "") {
-        res.status(http.StatusNoContent).json({
-          message: "Failed to insert room. Room's number cannot be empty",
-          error: error.message,
-        });
-        return;
-      }
-
-      // Add to firestore
-      const roomData = {
-        roomId: roomId,
-        roomTypeId: roomTypeId,
-        hotelName: hotelName,
-        roomNumber: roomNumber,
-        status: "Available",
-      };
-
-      await ref.add(roomData);
-      res.status(200).json({
-        message: "Room inserted successfully",
-        error: null,
-        data: roomData,
+    if (roomId == "") {
+      res.status(http.StatusNoContent).json({
+        message: "Failed to insert room. Room's id cannot be empty",
+        error: error.message,
       });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Failed to insert room", error: error.message });
+      return;
     }
-  } else {
-    res.status(403).json({ message: "Unauthorized" });
+    if (roomTypeId == "") {
+      res.status(http.StatusNoContent).json({
+        message: "Failed to insert room. Room type's id cannot be empty",
+        error: error.message,
+      });
+      return;
+    }
+    if (hotelName == "") {
+      res.status(http.StatusNoContent).json({
+        message: "Failed to insert room. Hotel's id cannot be empty",
+        error: error.message,
+      });
+      return;
+    }
+    if (roomNumber == "") {
+      res.status(http.StatusNoContent).json({
+        message: "Failed to insert room. Room's number cannot be empty",
+        error: error.message,
+      });
+      return;
+    }
+
+    // Add to firestore
+    const roomData = {
+      roomId: roomId,
+      roomTypeId: roomTypeId,
+      hotelName: hotelName,
+      roomNumber: roomNumber,
+      status: "Available",
+    };
+
+    await ref.add(roomData);
+    res.status(200).json({
+      message: "Room inserted successfully",
+      error: null,
+      data: roomData,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to insert room", error: error.message });
   }
 };
 
 exports.updateRoom = async (req, res) => {
-  if (req.user.userType === "Admin") {
-    try {
-      const { roomId, roomTypeId, hotelName, roomNumber, status } = req.body;
-      const currentRoomId = req.params["roomId"];
-      const snapshot = await ref.where("roomId", "==", currentRoomId).get();
-      if (snapshot.empty) {
-        res
-          .status(200)
-          .json({ message: "Room not found", error: null, data: null });
-        return;
-      }
-      snapshot.forEach((doc) => {
-        id = doc.id;
-        oldData = doc.data();
-      });
-
-      if (roomId != "") {
-        oldData.roomId = roomId;
-      }
-      if (roomTypeId != "") {
-        oldData.roomTypeId = roomTypeId;
-      }
-      if (hotelName != "") {
-        oldData.hotelName = hotelName;
-      }
-      if (roomNumber != "") {
-        oldData.roomNumber = roomNumber;
-      }
-      if (status != "") {
-        oldData.status = status;
-      }
-      const newDataRoom = {
-        roomId: oldData.roomId,
-        roomTypeId: oldData.roomTypeId,
-        hotelName: oldData.hotelName,
-        roomNumber: oldData.roomNumber,
-        status: oldData.status,
-      };
-
-      await ref.doc(id).update(newDataRoom);
-      res.status(200).json({
-        message: "Room updated successfully",
-        error: null,
-        data: newDataRoom,
-      });
-    } catch (error) {
+  try {
+    const { roomId, roomTypeId, hotelName, roomNumber, status } = req.body;
+    const currentRoomId = req.params["roomId"];
+    const snapshot = await ref.where("roomId", "==", currentRoomId).get();
+    if (snapshot.empty) {
       res
-        .status(500)
-        .json({ message: "Failed to update room", error: error.message });
+        .status(200)
+        .json({ message: "Room not found", error: null, data: null });
+      return;
     }
-  } else {
-    res.status(403).json({ message: "Unauthorized" });
+    snapshot.forEach((doc) => {
+      id = doc.id;
+      oldData = doc.data();
+    });
+
+    if (roomId != "") {
+      oldData.roomId = roomId;
+    }
+    if (roomTypeId != "") {
+      oldData.roomTypeId = roomTypeId;
+    }
+    if (hotelName != "") {
+      oldData.hotelName = hotelName;
+    }
+    if (roomNumber != "") {
+      oldData.roomNumber = roomNumber;
+    }
+    if (status != "") {
+      oldData.status = status;
+    }
+    const newDataRoom = {
+      roomId: oldData.roomId,
+      roomTypeId: oldData.roomTypeId,
+      hotelName: oldData.hotelName,
+      roomNumber: oldData.roomNumber,
+      status: oldData.status,
+    };
+
+    await ref.doc(id).update(newDataRoom);
+    res.status(200).json({
+      message: "Room updated successfully",
+      error: null,
+      data: newDataRoom,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to update room", error: error.message });
   }
 };
 
 exports.updateRoomStatusToBooked = async (req, res) => {
-  if (req.user.userType === "Admin") {
-    try {
-      const roomId = req.params["roomId"];
-      const snapshot = await ref.where("roomId", "==", roomId).get();
-      if (snapshot.empty) {
-        res
-          .status(200)
-          .json({ message: "Room not found", error: null, data: null });
-        return;
-      }
-      snapshot.forEach((doc) => {
-        id = doc.id;
-        oldData = doc.data();
-      });
-      const newDataRoom = {
-        roomId: oldData.roomId,
-        roomTypeId: oldData.roomTypeId,
-        hotelName: oldData.hotelName,
-        roomNumber: oldData.roomNumber,
-        status: "Booked",
-      };
-
-      await ref.doc(id).update(newDataRoom);
-      res.status(200).json({
-        message: "Room status updated successfully to booked",
-        error: null,
-        data: newDataRoom,
-      });
-    } catch (error) {
-      res.status(500).json({
-        message: "Failed to update room status",
-        error: error.message,
-      });
+  try {
+    const roomId = req.params["roomId"];
+    const snapshot = await ref.where("roomId", "==", roomId).get();
+    if (snapshot.empty) {
+      res
+        .status(200)
+        .json({ message: "Room not found", error: null, data: null });
+      return;
     }
-  } else {
-    res.status(403).json({ message: "Unauthorized" });
+    snapshot.forEach((doc) => {
+      id = doc.id;
+      oldData = doc.data();
+    });
+    const newDataRoom = {
+      roomId: oldData.roomId,
+      roomTypeId: oldData.roomTypeId,
+      hotelName: oldData.hotelName,
+      roomNumber: oldData.roomNumber,
+      status: "Booked",
+    };
+
+    await ref.doc(id).update(newDataRoom);
+    res.status(200).json({
+      message: "Room status updated successfully to booked",
+      error: null,
+      data: newDataRoom,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to update room status", error: error.message });
   }
 };
 
 exports.updateRoomStatusToAvailable = async (req, res) => {
-  if (req.user.userType === "Admin") {
-    try {
-      const roomId = req.params["roomId"];
-      const snapshot = await ref.where("roomId", "==", roomId).get();
-      if (snapshot.empty) {
-        res
-          .status(200)
-          .json({ message: "Room not found", error: null, data: null });
-        return;
-      }
-      snapshot.forEach((doc) => {
-        id = doc.id;
-        oldData = doc.data();
-      });
-      const newDataRoom = {
-        roomId: oldData.roomId,
-        roomTypeId: oldData.roomTypeId,
-        hotelName: oldData.hotelName,
-        roomNumber: oldData.roomNumber,
-        status: "Available",
-      };
-
-      await ref.doc(id).update(newDataRoom);
-      res.status(200).json({
-        message: "Room status updated successfully to avaiable",
-        error: null,
-        data: newDataRoom,
-      });
-    } catch (error) {
-      res.status(500).json({
-        message: "Failed to update room status",
-        error: error.message,
-      });
+  try {
+    const roomId = req.params["roomId"];
+    const snapshot = await ref.where("roomId", "==", roomId).get();
+    if (snapshot.empty) {
+      res
+        .status(200)
+        .json({ message: "Room not found", error: null, data: null });
+      return;
     }
-  } else {
-    res.status(403).json({ message: "Unauthorized" });
+    snapshot.forEach((doc) => {
+      id = doc.id;
+      oldData = doc.data();
+    });
+    const newDataRoom = {
+      roomId: oldData.roomId,
+      roomTypeId: oldData.roomTypeId,
+      hotelName: oldData.hotelName,
+      roomNumber: oldData.roomNumber,
+      status: "Available",
+    };
+
+    await ref.doc(id).update(newDataRoom);
+    res.status(200).json({
+      message: "Room status updated successfully to avaiable",
+      error: null,
+      data: newDataRoom,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to update room status", error: error.message });
   }
 };
 
 exports.deleteRoom = async (req, res) => {
-  if (req.user.userType === "Admin") {
-    try {
-      const roomId = req.params["roomId"];
-      const snapshot = await ref.where("roomId", "==", roomId).get();
-      if (snapshot.empty) {
-        res
-          .status(200)
-          .json({ message: "Room not found", error: null, data: null });
-        return;
-      }
-      snapshot.forEach((doc) => {
-        id = doc.id;
-        oldData = doc.data();
-      });
-
-      await ref.doc(id).delete();
-      res.status(200).json({
-        message: "Room deleted successfully",
-        error: null,
-        data: null,
-      });
-    } catch (error) {
+  try {
+    const roomId = req.params["roomId"];
+    const snapshot = await ref.where("roomId", "==", roomId).get();
+    if (snapshot.empty) {
       res
-        .status(401)
-        .json({ message: "Failed to delete room", error: error.message });
+        .status(200)
+        .json({ message: "Room not found", error: null, data: null });
+      return;
     }
-  } else {
-    res.status(403).json({ message: "Unauthorized" });
+    snapshot.forEach((doc) => {
+      id = doc.id;
+      oldData = doc.data();
+    });
+
+    await ref.doc(id).delete();
+    res
+      .status(200)
+      .json({ message: "Room deleted successfully", error: null, data: null });
+  } catch (error) {
+    res
+      .status(401)
+      .json({ message: "Failed to delete room", error: error.message });
   }
 };
 
 exports.getRoomByRoomId = async (req, res) => {
-  if (req.user.userType === "Admin") {
-    try {
-      const roomId = req.params["roomId"];
-      const snapshot = await ref.where("roomId", "==", roomId).get();
-      if (snapshot.empty) {
-        res
-          .status(200)
-          .json({ message: "No room found", error: null, data: null });
-        return;
-      }
-      snapshot.forEach((doc) => {
-        id = doc.id;
-        data = doc.data();
-      });
-
-      res.status(200).json({
-        message: "Room retrieved successfully!",
-        error: null,
-        data: data,
-      });
-    } catch (error) {
+  try {
+    const roomId = req.params["roomId"];
+    const snapshot = await ref.where("roomId", "==", roomId).get();
+    if (snapshot.empty) {
       res
-        .status(401)
-        .json({ message: "Failed to get room", error: error.message });
+        .status(200)
+        .json({ message: "No room found", error: null, data: null });
+      return;
     }
-  } else {
-    res.status(403).json({ message: "Unauthorized" });
+    snapshot.forEach((doc) => {
+      id = doc.id;
+      data = doc.data();
+    });
+
+    res.status(200).json({
+      message: "Room retrieved successfully!",
+      error: null,
+      data: data,
+    });
+  } catch (error) {
+    res
+      .status(401)
+      .json({ message: "Failed to get room", error: error.message });
   }
 };
 
