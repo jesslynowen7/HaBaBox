@@ -84,7 +84,9 @@
     function updateIsiMenu(selectedValue) {
         const isiMenuDiv = document.getElementById('isi_menu');
 
-        fetch(`${selectedValue}.html`)
+        fetch(`${selectedValue}.html`, {
+            mode: "no-cors"
+        })
             .then(response => response.text())
             .then(html => {
                 isiMenuDiv.innerHTML = html;
