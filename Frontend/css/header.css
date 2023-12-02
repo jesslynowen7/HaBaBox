@@ -50,7 +50,7 @@ body {
   height: 38px;
 }
 
-.pfp {
+#profile-picture {
   width: 45px;
   height: 45px;
   border-radius: 50%;
