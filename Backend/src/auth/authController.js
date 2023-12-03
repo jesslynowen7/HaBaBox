@@ -24,7 +24,7 @@ exports.registerUser = async (req, res) => {
       name: name,
       email: email,
       point: 0,
-      profilePic: null,
+      profilePic: "path",
     };
 
     // Use the UID as the document ID in Firestore
@@ -40,7 +40,6 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-// Login user
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -51,25 +50,20 @@ exports.loginUser = async (req, res) => {
       .signInWithEmailAndPassword(email, password);
 
     // Generate an access token
-    const accessToken = await userCredential.user.getIdToken();
-
-    // Set the access token as an HttpOnly cookie
-    res.cookie("access_token", accessToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "strict", // Adjust based on your needs (strict, lax, none)
-      maxAge: 3600000, // Token expiration time in milliseconds (adjust as needed)
-      path: "/", // The path to set the cookie on (adjust based on your application structure)
-    });
+    const accessToken = await userCredential.user.getIdToken(true);
 
     // Fetch additional user data from Firestore
     const emailUser = userCredential.user.email;
     const snapshot = await ref.where("email", "==", emailUser).get();
 
+    let id, data;
+
     if (snapshot.empty) {
-      res
-        .status(200)
-        .json({ message: "Invalid password/email", error: null, data: null });
+      res.status(200).json({
+        message: "Invalid password/email",
+        error: null,
+        data: null,
+      });
       return;
     }
     snapshot.forEach((doc) => {

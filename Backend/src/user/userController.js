@@ -8,35 +8,31 @@ const ref = db.collection("users");
 
 exports.getCurrentUserData = async (req, res) => {
   try {
-    const token = req.body.token;
-    admin
-      .auth()
-      .verifyIdToken(token)
-      .then((decodedToken) => {
-        const uid = decodedToken.uid;
-        // Query based on uid
-        ref
-          .where("uid", "==", uid)
-          .get()
-          .then((snapshot) => {
-            // Handle the snapshot here
-            snapshot.forEach((doc) => {
-              id = doc.id;
-              data = doc.data();
-            });
-          })
-          .catch((error) => {
-            console.error("Error getting documents:", error);
-          });
+    const token = req.query.token; // Extract token from query parameters
 
-        res.status(200).json({ data });
-      })
-      .catch((error) => {
-        console.error("Error getting user by uid:", error);
-        throw error;
-      });
+    if (!token) {
+      return res
+        .status(400)
+        .json({ error: "Token is missing in the query parameters." });
+    }
+
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    const uid = decodedToken.uid;
+
+    // Query based on uid
+    const snapshot = await ref.doc(uid).get();
+
+    if (snapshot.empty) {
+      return res.status(404).json({ error: "User data not found." });
+    }
+
+    // Extract data from the snapshot
+    const userData = snapshot.data();
+
+    res.status(200).json(userData);
   } catch (error) {
-    throw error;
+    console.error("Error in getCurrentUserData:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

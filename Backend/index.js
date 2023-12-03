@@ -11,7 +11,7 @@ const promoRoutes = require("./src/promo");
 const cors = require("cors");
 
 // Enable CORS for all routes
-app.use(cors());
+app.use(cors({ origin: "http://127.0.0.1:3000", credentials: true }));
 
 // Middlewares
 app.use(express.urlencoded({ extended: false }));

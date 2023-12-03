@@ -1,33 +1,55 @@
 // header.js
-
-// Import modular Firebase SDK
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
-// Function to retrieve the current user and update the header with the profile picture
-async function updateHeaderWithProfilePicture() {
-  const auth = getAuth();
-
-  const getCurrentUser = () => new Promise((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      unsubscribe();
-      resolve(user);
-    }, reject);
-  });
-
-  const user = await getCurrentUser();
-
-  if (user) {
-    const profilePictureUrl = user.photoURL; // Assuming Firebase stores the profile picture URL
-
-    // Update the HTML element with the profile picture
-    const profilePictureElement = document.getElementById('profile-picture'); // Update with your actual element ID
-    if (profilePictureElement) {
-      profilePictureElement.src = profilePictureUrl;
+// Function to get the value of a specific cookie by name
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
     }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+var token = getCookie("access_token");
+
+async function setUserProfilePic() {
+  try {
+    const response = await fetch(
+      "http://localhost:8080/user/getCurrentUserData?token=" +
+        encodeURIComponent(token),
+      {
+        method: "GET",
+        credentials: "include", // Include cookies in the request
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const result = await response.json();
+
+    if (response.ok) {
+      // Successful login, handle the result as needed
+      console.log(result);
+
+      // Accessing the profilePic value directly from the result object
+      const profilePicValue = result.profilePic;
+      document.getElementById("profile-picture").src = profilePicValue;
+    } else {
+      // Failed login, handle the error
+      console.error(result);
+      alert(result.message);
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    // Handle the error accordingly
   }
 }
 
-// Call the function when the page loads
-document.addEventListener("DOMContentLoaded", () => {
-  updateHeaderWithProfilePicture();
-});
+setUserProfilePic();

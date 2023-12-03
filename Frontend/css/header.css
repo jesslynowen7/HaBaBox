@@ -51,8 +51,8 @@ body {
 }
 
 #profile-picture {
-  width: 45px;
-  height: 45px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   border: 1px solid white;
 }

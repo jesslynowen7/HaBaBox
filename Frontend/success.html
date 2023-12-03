@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Success</title>
     <link rel="stylesheet" href="css/success.css">
-    <script src="javascript/include_header_footer.js"></script>
 </head>
+
 <body>
     <!-- Include the header -->
-    <div id="header-container"></div>
+    <div w3-include-html="header.html"></div>
     <div id="checkout-container">
         <div id="progress_bar">
             <p class="teks-checkout">Checkout</p>
@@ -75,6 +76,11 @@
         </div>
     </div>
     <!-- Include the footer -->
-    <div id="footer-container"></div> 
+    <div w3-include-html="footer.html"></div>
+    <script src="javascript/include.js"></script>
+    <script>
+        includeHTML();
+    </script>
 </body>
+
 </html>
