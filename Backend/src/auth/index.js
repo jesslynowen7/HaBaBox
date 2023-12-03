@@ -11,7 +11,4 @@ router.post('/login', loginUser);
 // Logout user
 router.post('/logout', logoutUser);
 
-// Get Current User Data
-router.get('/getCurrentUserData', getCurrentUserData);
-
 module.exports = router;

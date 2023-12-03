@@ -1,9 +1,44 @@
 const { getFirestore } = require("firebase-admin/firestore");
 require("../utils/firebase-config.js");
 require("firebase/database");
+const admin = require("firebase-admin");
 
 const db = getFirestore();
 const ref = db.collection("users");
+
+exports.getCurrentUserData = async (req, res) => {
+  try {
+    const token = req.body.token;
+    admin
+      .auth()
+      .verifyIdToken(token)
+      .then((decodedToken) => {
+        const uid = decodedToken.uid;
+        // Query based on uid
+        ref
+          .where("uid", "==", uid)
+          .get()
+          .then((snapshot) => {
+            // Handle the snapshot here
+            snapshot.forEach((doc) => {
+              id = doc.id;
+              data = doc.data();
+            });
+          })
+          .catch((error) => {
+            console.error("Error getting documents:", error);
+          });
+
+        res.status(200).json({ data });
+      })
+      .catch((error) => {
+        console.error("Error getting user by uid:", error);
+        throw error;
+      });
+  } catch (error) {
+    throw error;
+  }
+};
 
 exports.updateProfilePicture = async (req, res) => {
   try {
