@@ -8,3 +8,5 @@ node_modules/.package-lock.json
 Backend/package-lock.json
 Backend/package.json
 node_modules
+private-key.pem
+certificate.pem
