@@ -19,6 +19,8 @@
     grid-template-columns: 1fr 1fr;
     margin: auto;
     width: 500px;
+    place-self: center;
+    gap: 30px;
 }
 
 #pfp-wrapper {
@@ -43,6 +45,7 @@
 #data-update {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 10px;
 }
 

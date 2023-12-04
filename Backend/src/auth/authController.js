@@ -70,6 +70,36 @@ exports.loginUser = async (req, res) => {
       id = doc.id;
       data = doc.data();
     });
+    res.cookie("access_token", accessToken, {
+      maxAge: 3600000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    res.cookie("email", data.email, {
+      maxAge: 3600000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    res.cookie("points", data.point, {
+      maxAge: 3600000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    res.cookie("name", data.name, {
+      maxAge: 3600000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    res.cookie("profilePic", data.profilePic, {
+      maxAge: 3600000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
 
     res.status(200).json({
       message: "Login successful",

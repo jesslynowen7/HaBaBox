@@ -1,4 +1,17 @@
-import { getCookie } from "./cookie.js";
+const cookieData = await fetch("https://localhost:8080/api/data", {
+  method: "GET",
+  credentials: "include", // Include cookies in the request (assuming same origin)
+});
+// Parse the JSON response
+const userData = await cookieData.json();
+console.log(userData);
+const profilePic = userData.data.profilePic;
+console.log(profilePic);
+const points = userData.data.points;
+console.log(points);
+const username = userData.data.name;
+console.log(username);
+
 // Add event listener for logout confirmation
 let popup = document.getElementById("popup");
 function openPopup() {
@@ -74,19 +87,15 @@ document.getElementById("logout_button").addEventListener("click", function () {
 });
 
 function setImgSrc() {
-  const imgPath = getCookie("profilePic");
-  console.log(imgPath);
-  document.getElementById("current-pfp").src = imgPath;
+  document.getElementById("current-pfp").src = profilePic;
 }
 
 function setHabapoints() {
-  const points = getCookie("points");
   document.getElementById("habapoints").textContent = points + " Habapoints";
 }
 
 function setName() {
-  const name = getCookie("name");
-  document.getElementById("nama_user").textContent = name;
+  document.getElementById("nama_user").textContent = username;
 }
 
 setImgSrc();

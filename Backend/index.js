@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const authRoutes = require("./src/auth");
 const hotelRoutes = require("./src/hotel");
 const roomRoutes = require("./src/room");
@@ -8,19 +9,47 @@ const transactionRoutes = require("./src/transaction");
 const userRoutes = require("./src/user");
 const eTicketRoutes = require("./src/e_ticket");
 const promoRoutes = require("./src/promo");
-const cors = require("cors");
 const https = require("https");
 const fs = require("fs");
+const cookieParser = require("cookie-parser");
 
 // Enable CORS for all routes
 app.use(cors({ origin: "https://localhost:3000", credentials: true }));
 
 // Middlewares
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // API routes
 app.use("/auth", authRoutes);
+app.get("/api/data", (req, res) => {
+  // Access data from the cookies
+  const accessToken = req.cookies.access_token;
+  const email = req.cookies.email;
+  const name = req.cookies.name;
+  const points = req.cookies.points;
+  const profilePic = req.cookies.profilePic;
+
+  // Use the data as needed
+  const userData = {
+    accessToken,
+    email,
+    name,
+    points,
+    profilePic,
+  };
+
+  if (userData.accessToken && userData.email && userData.name) {
+    // Success: All required data is present
+    res.status(200).json({ status: "success", data: userData });
+  } else {
+    // Error: Some or all required data is missing
+    res
+      .status(400)
+      .json({ status: "error", message: "User data not found in cookies" });
+  }
+});
 app.use("/hotel", hotelRoutes);
 app.use("/room", roomRoutes);
 app.use("/room_type", roomTypeRoutes);
@@ -36,8 +65,8 @@ app.get("/", (req, res) => {
 });
 
 // Load SSL/TLS certificates
-const privateKey = fs.readFileSync("./Backend/private-key.pem", "utf8");
-const certificate = fs.readFileSync("./Backend/certificate.pem", "utf8");
+const privateKey = fs.readFileSync("./private-key.pem", "utf8");
+const certificate = fs.readFileSync("./certificate.pem", "utf8");
 const credentials = { key: privateKey, cert: certificate };
 
 // Create an HTTPS server

@@ -7,6 +7,7 @@
     <title>Edit Profile</title>
     <link rel="icon" href="images/LogoHBB.svg">
     <link rel="stylesheet" href="css/update-profile.css">
+    <script src="javascript/edit-profile.js"></script>
 </head>
 
 <body>
@@ -17,7 +18,7 @@
                 <form action="" method="post" enctype="multipart/form-data">
                     <div id="pfp-wrapper">
                         <h3>Profile Photo</h3>
-                        <img src="images/default_pfp.jpeg" alt="Current Profile Picture">
+                        <img id="curr_pfp" src="images/default_pfp.jpeg" alt="Current Profile Picture">
                         <input type="file" id="upload-pfp" name="pfp_input">
                     </div>
                     <div id="data-update">
@@ -25,11 +26,7 @@
                             Name<br>
                             <input type="text" name="new-name" id="form-name">
                         </label>
-                        <label id="update-telephone">
-                            Telephone<br>
-                            <input type="number" name="new-telephone-number" id="form-telephone">
-                        </label>
-                        <label id="update-telephone">
+                        <label id="update-email">
                             E-Mail<br>
                             <input type="email" name="new-email" id="form-email">
                         </label>
