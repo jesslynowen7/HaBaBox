@@ -277,9 +277,14 @@ exports.getTransactionsByEmailAndStatus = async (req, res) => {
       const roomId = transactionData.roomId;
 
       // Retrieve only hotelName and roomImg from the "rooms" collection
-      const roomDetailsSnapshot = await roomsRef.doc(roomId).get();
-      if (roomDetailsSnapshot.exists) {
-        const roomDetails = roomDetailsSnapshot.data();
+      const roomDetailsSnapshot = await roomsRef
+        .where("roomId", "==", roomId)
+        .get();
+      console.log(roomDetailsSnapshot);
+      // Check if there's any document in the result
+      if (!roomDetailsSnapshot.empty) {
+        // Assuming there's only one document in the result
+        const roomDetails = roomDetailsSnapshot.docs[0].data();
         return {
           hotelName: roomDetails.hotelName,
           roomImg: roomDetails.roomImg,

@@ -2,6 +2,8 @@ import { getCookie } from "./cookie.js";
 
 // Get the profilePic path from the cookie
 const profilePicPath = getCookie("profilePic");
+const token = getCookie("access_token");
+console.log("Token:", token);
 
 // If the profilePic path is found in the cookie, set it as the source
 if (profilePicPath) {
@@ -11,11 +13,12 @@ if (profilePicPath) {
   async function getUserProfilePic() {
     try {
       const response = await fetch(
-        "http://localhost:8080/user/getCurrentUserData?token=" +
-          encodeURIComponent(token),
+        `http://localhost:8080/user/getCurrentUserData?token=${encodeURIComponent(
+          token
+        )}`,
         {
           method: "GET",
-          credentials: "include", // Include cookies in the request
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
