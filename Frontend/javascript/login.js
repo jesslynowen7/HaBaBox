@@ -24,8 +24,14 @@ async function login() {
   if (response.ok) {
     // Successful login, handle the result as needed
     console.log(result);
+
+    // Set cookies for access_token, email, points, name, and profilePic
     setCookie("access_token", result.accessToken);
     setCookie("email", result.dataUser.email);
+    setCookie("points", result.dataUser.point.toString()); // Convert to string if not already
+    setCookie("name", result.dataUser.name);
+    setCookie("profilePic", result.dataUser.profilePic);
+
     window.location.href = "index.html";
   } else {
     // Failed login, handle the error

@@ -29,6 +29,7 @@ async function getUnpaidBook() {
     throw new Error(`HTTP error! Status: ${response.status}`);
   }
 }
+const myBookData = getUnpaidBook(); 
 // Function to dynamically populate the div with data
 function populateMyBookContainer() {
   const container = document.getElementById("my-book-container");
