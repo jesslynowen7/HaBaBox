@@ -1,7 +1,7 @@
-// Function to set a cookie
-function setCookie(name, value, days) {
+// Function to set a cookie with expiration time of 1 hour
+function setCookie(name, value) {
   const expires = new Date();
-  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000); // Set expiration time in milliseconds
+  expires.setTime(expires.getTime() + 60 * 60 * 1000); // 1 hour in milliseconds
 
   document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
 }
@@ -24,8 +24,8 @@ async function login() {
   if (response.ok) {
     // Successful login, handle the result as needed
     console.log(result);
-    setCookie("access_token", result.accessToken, 7);
-    setCookie("email", result.dataUser.email, 7);
+    setCookie("access_token", result.accessToken);
+    setCookie("email", result.dataUser.email);
     window.location.href = "index.html";
   } else {
     // Failed login, handle the error

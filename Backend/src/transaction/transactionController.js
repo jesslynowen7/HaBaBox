@@ -4,6 +4,7 @@ require("firebase/database");
 
 const db = getFirestore();
 const ref = db.collection("transactions");
+const roomsRef = db.collection("rooms");
 
 exports.insertTransaction = async (req, res) => {
   try {
@@ -237,6 +238,70 @@ exports.getTransactionsByEmail = async (req, res) => {
       id = doc.id;
       data = doc.data();
       dataArr.push({ id, data });
+    });
+
+    res.status(200).json({
+      message: "Transaction(s) retrieved successfully!",
+      error: null,
+      data: dataArr,
+    });
+  } catch (error) {
+    res
+      .status(401)
+      .json({ message: "Failed to get transaction", error: error.message });
+  }
+};
+
+exports.getTransactionsByEmailAndStatus = async (req, res) => {
+  try {
+    const email = req.params["email"];
+    const status = req.params["status"];
+
+    const snapshot = await ref
+      .where("email", "==", email)
+      .where("status", "==", status)
+      .get();
+
+    const dataArr = [];
+
+    if (snapshot.empty) {
+      res
+        .status(200)
+        .json({ message: "No transaction found", error: null, data: null });
+      return;
+    }
+
+    // Fetch additional details from the "rooms" collection based on the retrieved roomId
+    const roomDetailsPromises = snapshot.docs.map(async (doc) => {
+      const transactionData = doc.data();
+      const roomId = transactionData.roomId;
+
+      // Retrieve only hotelName and roomImg from the "rooms" collection
+      const roomDetailsSnapshot = await roomsRef.doc(roomId).get();
+      if (roomDetailsSnapshot.exists) {
+        const roomDetails = roomDetailsSnapshot.data();
+        return {
+          hotelName: roomDetails.hotelName,
+          roomImg: roomDetails.roomImg,
+          // Add other fields if needed
+        };
+      } else {
+        return null; // Handle the case where room details are not found
+      }
+    });
+
+    const roomDetailsArray = await Promise.all(roomDetailsPromises);
+
+    snapshot.forEach((doc, index) => {
+      id = doc.id;
+      data = doc.data();
+      const additionalRoomDetails = roomDetailsArray[index];
+
+      if (additionalRoomDetails) {
+        dataArr.push({ id, ...data, ...additionalRoomDetails });
+      } else {
+        dataArr.push({ id, ...data });
+      }
     });
 
     res.status(200).json({
