@@ -25,6 +25,7 @@ async function login() {
     // Successful login, handle the result as needed
     console.log(result);
     setCookie("access_token", result.accessToken, 7);
+    setCookie("email", result.dataUser.email, 7);
     window.location.href = "index.html";
   } else {
     // Failed login, handle the error

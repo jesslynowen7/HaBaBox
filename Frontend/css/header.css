@@ -10,11 +10,12 @@ body {
   position: sticky;
   top:0;
   color: white;
-  height: 10vh;
+  max-height: 100vh;
   background-color: #00afaa;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 10px;
 }
 
 .header_container > header {
