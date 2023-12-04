@@ -9,9 +9,11 @@ const userRoutes = require("./src/user");
 const eTicketRoutes = require("./src/e_ticket");
 const promoRoutes = require("./src/promo");
 const cors = require("cors");
+const https = require("https");
+const fs = require("fs");
 
 // Enable CORS for all routes
-app.use(cors({ origin: "http://127.0.0.1:3000", credentials: true }));
+app.use(cors({ origin: "https://localhost:3000", credentials: true }));
 
 // Middlewares
 app.use(express.urlencoded({ extended: false }));
@@ -33,8 +35,15 @@ app.get("/", (req, res) => {
   res.send("Welcome to the API");
 });
 
-// Set port and listen for our requests
+// Load SSL/TLS certificates
+const privateKey = fs.readFileSync("./Backend/private-key.pem", "utf8");
+const certificate = fs.readFileSync("./Backend/certificate.pem", "utf8");
+const credentials = { key: privateKey, cert: certificate };
+
+// Create an HTTPS server
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(PORT, () => {
   console.log(`server is running on PORT ${PORT}`);
 });
