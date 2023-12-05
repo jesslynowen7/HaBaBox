@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#title-unpaid-book {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.my-book-hotel-img {
+    width: 246px;
+    border-radius: 20px;
+}
+
+.my-book-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.container-temp {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    align-items: center;
+}
+
+.my-book-harga {
+    font-weight: bold;
+}
+
+#wrapper {
+    background-color: #2DB6B6;
+    padding: 30px;
+    padding-bottom: 100px;
+    width: 500px;
+    border-radius: 20px;
+    overflow: auto;
+}
+
+#my-book-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: scroll;
+    max-height: 100vh;
+}
+
+.my-book-entry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 10px;
+    gap: 10px;
+    border-radius: 20px;
+}
+
+.deskripsi {
+    font-size: 0.9em;
+    white-space: pre-line;
+    /* or 'pre-wrap' */
+}
+
+.pay-unpaid-button {
+    border: none;
+    background-color: #C4C4C4;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}

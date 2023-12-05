@@ -1,0 +1,67 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile</title>
+        <link rel="stylesheet" href="css/profile.css">
+    </head>
+
+    <body>
+        <!-- Include the header -->
+        <div id="header"></div>
+
+        <div id="content-container">
+            <div id="nav-menu">
+                <img id="current-pfp" width="64px" height="64px" src="images/default_pfp.jpeg" alt="pfp">
+                <h2 id="nama_user">Name</h2>
+                <p id="habapoints">Habapoints</p>
+                <form id="form_menu" action="#">
+                    <label>
+                        <input type="radio" id="my_stay" name="pilihan_menu" value="my_stay" checked="true">
+                        My Stay
+                    </label>
+
+                    <label>
+                        <input type="radio" id="my_book" name="pilihan_menu" value="my_book">
+                        My Book
+                    </label>
+
+                    <label>
+                        <input type="radio" id="history" name="pilihan_menu" value="history">
+                        History
+                    </label>
+
+                    <label>
+                        <input type="radio" id="points" name="pilihan_menu" value="points">
+                        Points
+                    </label>
+
+                    <label>
+                        <input type="radio" id="edit_profile" name="pilihan_menu" value="edit_profile">
+                        Edit Profile
+                    </label>
+
+                    <input id="logout_button" type="button" value="Logout">
+                    <div class="popup" id="popup">
+                        <img src="images/question_mark.png" alt="?">
+                        <h2>Are you sure?</h2>
+                        <p>You will be logged out of your account!</p>
+                        <button id="cancel_button">Cancel</button>
+                        <button id="confirm_button">Confirm</button> <!-- Tambahin fungsi buat logout klo press confirm -->
+                    </div>
+                </form>
+            </div>
+            <div id="isi_menu">
+
+            </div>
+        </div>
+
+        <!-- Include the footer -->
+        <div id="footer"></div>
+        <script src="javascript/main.js"></script>
+        <script type="module" src="javascript/profile.js"></script>
+    </body>
+
+    </html>

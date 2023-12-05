@@ -4,3 +4,9 @@ Backend/src/utils/firebase-config.js
 
 Backend/hababoxServiceAccountKey.json
 node_modules
+node_modules/.package-lock.json
+Backend/package-lock.json
+Backend/package.json
+node_modules
+private-key.pem
+certificate.pem

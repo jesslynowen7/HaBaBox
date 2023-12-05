@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#content-container {
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  margin: auto;
+  justify-items: center;
+  align-items: center;
+}
+
+#nav-menu {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  border: 1px solid black;
+  width: 250px;
+  padding: 50px 10px;
+  border-radius: 20px;
+  height: 400px;
+}
+
+#nav-menu > img {
+  border-radius: 20px;
+}
+
+#logout_button {
+  border: none;
+  font-size: 1.3em;
+  color: #fe5454;
+  cursor: pointer;
+}
+
+#habapoints {
+  font-size: 0.8em;
+  padding-bottom: 10px;
+}
+
+#content-container > label {
+  color: black;
+}
+
+#form_menu {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+#form_menu > label {
+  cursor: pointer;
+}
+
+#isi_menu {
+  padding-left: 20px;
+}
+
+.popup > img {
+  border-radius: 50%;
+  width: 100px;
+  padding-top: 30px;
+}
+
+.popup {
+  background-color: #00afaa;
+  border-radius: 6px;
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  text-align: center;
+  padding: 0 30px 30px;
+  color: white;
+  visibility: hidden;
+  transition: transform 0.4s, top 0.4s;
+}
+
+.open-popup {
+  top: 50%;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.popup button {
+  width: 100px;
+  border: none;
+  cursor: pointer;
+  padding: 5px 0;
+}
+
