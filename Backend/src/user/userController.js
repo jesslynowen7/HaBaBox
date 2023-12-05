@@ -76,6 +76,20 @@ exports.updateUserData = async (req, res) => {
 
     await ref.doc(uid).update(newDataUser);
 
+    // Update transactions collection
+    const transactionsRef = db.collection("transactions");
+    const snapshot = await transactionsRef
+      .where("email", "==", oldData.email)
+      .get();
+
+    if (!snapshot.empty) {
+      snapshot.forEach((doc) => {
+        transactionsRef.doc(doc.id).update({
+          email: newDataUser.email,
+        });
+      });
+    }
+
     const cookieOptions = {
       maxAge: 3600000,
       httpOnly: true,

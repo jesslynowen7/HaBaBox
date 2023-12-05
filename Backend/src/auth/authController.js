@@ -115,3 +115,27 @@ exports.logoutUser = async (req, res) => {
       .json({ message: "Failed to log out user", error: error.message });
   }
 };
+
+// Forgot Password
+exports.forgotPassword = async (req, res) => {
+  try {
+    // Get the email address from the request body
+    const email = req.body.email;
+    console.log(email);
+
+    // Use Firebase Authentication to send the password reset email
+    await firebase.auth().sendPasswordResetEmail(email);
+
+    // Send a success response
+    res.status(200).json({
+      message: "Password reset email sent successfully",
+      error: null,
+    });
+  } catch (error) {
+    // An error occurred, so send an error response
+    res.status(500).json({
+      message: "Failed to send password reset email",
+      error: error.message,
+    });
+  }
+};
