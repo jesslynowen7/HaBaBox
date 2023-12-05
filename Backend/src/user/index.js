@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { getCurrentUserData, updateProfilePicture, updateUserPoints } = require("./userController");
+const { getCurrentUserData, updateUserData, updateUserPoints } = require("./userController");
 
 //User
-router.put("/profile/:email", updateProfilePicture);
+router.put("/updateUserData", updateUserData);
 router.put("/point/:email", updateUserPoints);
 // Get Current User Data
 router.get("/getCurrentUserData", getCurrentUserData);

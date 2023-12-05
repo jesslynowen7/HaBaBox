@@ -280,7 +280,7 @@ exports.getTransactionsByEmailAndStatus = async (req, res) => {
       const roomDetailsSnapshot = await roomsRef
         .where("roomId", "==", roomId)
         .get();
-      console.log(roomDetailsSnapshot);
+
       // Check if there's any document in the result
       if (!roomDetailsSnapshot.empty) {
         // Assuming there's only one document in the result
@@ -297,17 +297,18 @@ exports.getTransactionsByEmailAndStatus = async (req, res) => {
 
     const roomDetailsArray = await Promise.all(roomDetailsPromises);
 
-    snapshot.forEach((doc, index) => {
-      id = doc.id;
-      data = doc.data();
-      const additionalRoomDetails = roomDetailsArray[index];
+    for (let i = 0; i < snapshot.docs.length; i++) {
+      const doc = snapshot.docs[i];
+      const id = doc.id;
+      const data = doc.data();
+      const additionalRoomDetails = roomDetailsArray[i];
 
       if (additionalRoomDetails) {
         dataArr.push({ id, ...data, ...additionalRoomDetails });
       } else {
         dataArr.push({ id, ...data });
       }
-    });
+    }
 
     res.status(200).json({
       message: "Transaction(s) retrieved successfully!",

@@ -52,10 +52,11 @@ body {
 }
 
 #profile-picture {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   border: 1px solid white;
+  object-fit: cover; /* this makes the image cover the entire element, cropping if necessary */
 }
 
 ul {

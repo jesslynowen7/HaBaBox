@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const multer = require("multer");
 const cors = require("cors");
 const authRoutes = require("./src/auth");
 const hotelRoutes = require("./src/hotel");
@@ -11,6 +12,7 @@ const eTicketRoutes = require("./src/e_ticket");
 const promoRoutes = require("./src/promo");
 const https = require("https");
 const fs = require("fs");
+const path = require("path");
 const cookieParser = require("cookie-parser");
 
 // Enable CORS for all routes
@@ -20,6 +22,36 @@ app.use(cors({ origin: "https://localhost:3000", credentials: true }));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// Set up Multer storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../Frontend/images/"); // Destination folder
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Keep the original file name
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post("/upload", upload.single("pfp_input"), (req, res) => {
+  const targetPath = path.join(
+    __dirname,
+    "../Frontend/images/" + req.file.originalname
+  );
+
+  // Check if file already exists
+  if (fs.existsSync(targetPath)) {
+    return res.status(200).json({
+      message: "File already exists",
+      path: "images/" + req.file.originalname,
+    });
+  }
+
+  // File is now uploaded and req.file is set
+  res.status(200).json({ path: "images/" + req.file.originalname });
+});
 
 // API routes
 app.use("/auth", authRoutes);

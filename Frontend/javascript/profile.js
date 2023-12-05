@@ -1,103 +1,101 @@
-const cookieData = await fetch("https://localhost:8080/api/data", {
-  method: "GET",
-  credentials: "include", // Include cookies in the request (assuming same origin)
-});
-// Parse the JSON response
-const userData = await cookieData.json();
-console.log(userData);
-const profilePic = userData.data.profilePic;
-console.log(profilePic);
-const points = userData.data.points;
-console.log(points);
-const username = userData.data.name;
-console.log(username);
-
+import { fetchUserData } from "./api.js";
+const userData = await fetchUserData();
+console.log("Profile User data " + userData);
 // Add event listener for logout confirmation
 let popup = document.getElementById("popup");
-function openPopup() {
+let logoutButton = document.getElementById("logout_button");
+let cancelButton = document.getElementById("cancel_button");
+let confirmButton = document.getElementById("confirm_button");
+logoutButton.addEventListener("click", function () {
   popup.classList.add("open-popup");
-}
-function closePopup() {
-  popup.classList.remove("open-popup");
-}
-// Add event listener to radio buttons
-document
-  .getElementById("form_menu")
-  .addEventListener("change", function (event) {
-    if (event.target.type === "radio" && event.target.checked) {
-      // Handle the selected radio button
-      const selectedValue = event.target.value;
-      updateIsiMenu(selectedValue);
-    }
-  });
+});
 
-// Function to update isi_menu based on the selected radio button
-async function updateIsiMenu(selectedValue) {
-  const isiMenuDiv = document.getElementById("isi_menu");
+cancelButton.addEventListener("click", function () {
+  popup.classList.remove("open-popup");
+});
+confirmButton.addEventListener("click", async function (event) {
+  event.preventDefault(); // Prevent the default action
 
   try {
-    // Fetch the HTML content
-    const response = await fetch(`${selectedValue}.html`, {
-      mode: "no-cors",
+    const response = await fetch("https://localhost:8080/auth/logout", {
+      method: "POST",
+      credentials: "include", // Include cookies in the request
     });
 
-    // Retrieve the text content of the HTML
-    const html = await response.text();
-
-    // Inject the HTML into the isi_menu div
-    isiMenuDiv.innerHTML = html;
-
-    // Dynamically import and execute module scripts
-    const scriptElements = isiMenuDiv.getElementsByTagName("script");
-
-    for (const scriptElement of scriptElements) {
-      if (scriptElement.src) {
-        // For external scripts
-        const script = document.createElement("script");
-        script.src = scriptElement.src;
-        script.type = "module";
-        document.body.appendChild(script);
-      } else {
-        // For inline scripts
-        eval(scriptElement.innerText);
-      }
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+
+    console.log("Logout successful");
+    popup.classList.remove("open-popup");
+
+    // Redirect to the default page
+    window.location.href = "https://localhost:3000"; // replace with your actual default page URL
   } catch (error) {
-    console.error("Error loading HTML template:", error);
-    isiMenuDiv.innerHTML = "Error loading content";
-  }
-}
-
-// Initial call to update isi_menu with the default checked value
-const defaultCheckedValue = document.querySelector(
-  'input[name="pilihan_menu"]:checked'
-).value;
-updateIsiMenu(defaultCheckedValue);
-
-// Event listener for the logout button
-document.getElementById("logout_button").addEventListener("click", function () {
-  // Display a confirmation dialog
-  const confirmed = confirm("Are you sure you want to logout?");
-
-  // If the user confirms, perform the logout action
-  if (confirmed) {
-    // Add your logout logic here
-    console.log("User confirmed logout. Implement your logout logic.");
+    console.error("There has been a problem with your fetch operation:", error);
   }
 });
 
 function setImgSrc() {
-  document.getElementById("current-pfp").src = profilePic;
+  document.getElementById("current-pfp").src = userData.profilePic;
 }
 
 function setHabapoints() {
-  document.getElementById("habapoints").textContent = points + " Habapoints";
+  document.getElementById("habapoints").textContent =
+    userData.points + " Habapoints";
 }
 
 function setName() {
-  document.getElementById("nama_user").textContent = username;
+  document.getElementById("nama_user").textContent = userData.name;
 }
 
 setImgSrc();
 setHabapoints();
 setName();
+
+// Function to load content based on selected menu
+function loadContent(selectedMenu) {
+  console.log("loadContent called with:", selectedMenu);
+  var contentDiv = document.getElementById("isi_menu");
+
+  // Fetch the HTML file for the selected menu
+  fetch(selectedMenu + ".html")
+    .then((response) => {
+      console.log("Fetch response:", response);
+      return response.text();
+    })
+    .then((html) => {
+      // Insert the HTML content into the "isi_menu" div
+      contentDiv.innerHTML = html;
+
+      // Dynamically load the JavaScript module for the selected menu
+      var script = document.createElement("script");
+      script.type = "module";
+      // Add a cache-busting query parameter to the src attribute
+      script.src = "javascript/" + selectedMenu + ".js?" + new Date().getTime();
+
+      // Remove the script tag after it's loaded to avoid memory leaks
+      script.onload = function () {
+        this.remove();
+      };
+
+      // Append the script tag to the body
+      document.body.appendChild(script);
+    })
+    .catch((error) => {
+      console.error("Error fetching file:", error);
+    });
+}
+
+// Your existing event listeners
+document.getElementById("form_menu").addEventListener("change", function (e) {
+  console.log("form_menu change event:", e.target.value);
+  loadContent(e.target.value);
+});
+
+// Call the function with the default checked option immediately
+var defaultMenu = document.querySelector(
+  'input[name="pilihan_menu"]:checked'
+).value;
+console.log("Calling loadContent with defaultMenu:", defaultMenu);
+loadContent(defaultMenu);

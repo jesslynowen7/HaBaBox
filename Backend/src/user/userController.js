@@ -36,25 +36,37 @@ exports.getCurrentUserData = async (req, res) => {
   }
 };
 
-exports.updateProfilePicture = async (req, res) => {
+exports.updateUserData = async (req, res) => {
   try {
     const profilePic = req.body.profilePic;
-    const email = req.params["email"];
-    const snapshot = await ref.where("email", "==", email).get();
-    if (snapshot.empty) {
+    const email = req.body.email;
+    const name = req.body.name;
+    const token = req.body.token;
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    const uid = decodedToken.uid;
+
+    // Get the document by its ID
+    const doc = await ref.doc(uid).get();
+
+    if (!doc.exists) {
       res
         .status(200)
         .json({ message: "User not found", error: null, data: null });
       return;
     }
-    snapshot.forEach((doc) => {
-      id = doc.id;
-      oldData = doc.data();
-    });
+
+    let oldData = doc.data();
 
     if (profilePic != "") {
       oldData.profilePic = profilePic;
     }
+    if (email != "") {
+      oldData.email = email;
+    }
+    if (name != "") {
+      oldData.name = name;
+    }
+
     const newDataUser = {
       email: oldData.email,
       name: oldData.name,
@@ -62,15 +74,26 @@ exports.updateProfilePicture = async (req, res) => {
       profilePic: oldData.profilePic,
     };
 
-    await ref.doc(id).update(newDataUser);
+    await ref.doc(uid).update(newDataUser);
+
+    const cookieOptions = {
+      maxAge: 3600000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    };
+    res.cookie("email", newDataUser.email, cookieOptions);
+    res.cookie("profilePic", newDataUser.profilePic, cookieOptions);
+    res.cookie("name", newDataUser.name, cookieOptions);
+
     res.status(200).json({
-      message: "Profile picture updated successfully",
+      message: "User data updated successfully",
       error: null,
       data: newDataUser,
     });
   } catch (error) {
     res.status(500).json({
-      message: "Failed to update profile picture",
+      message: "Failed to update user data",
       error: error.message,
     });
   }
