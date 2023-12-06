@@ -321,6 +321,16 @@ exports.searchRoom = async (req, res) => {
             checkOut
           );
 
+          // Query roomType collection using roomTypeId from room collection
+          const roomTypeSnapshot = await db
+            .collection("room_types")
+            .where("id", "==", roomData.roomTypeId)
+            .get();
+
+          if (!roomTypeSnapshot.empty) {
+            roomData.roomType = roomTypeSnapshot.docs[0].data();
+          }
+
           if (isRoomAvailable) {
             roomArr.push(roomData);
           }
@@ -345,6 +355,7 @@ exports.searchRoom = async (req, res) => {
     });
   }
 };
+
 
 const isRoomAvailableForDates = async (roomId, checkIn, checkOut) => {
   const transactionsSnapshot = await db

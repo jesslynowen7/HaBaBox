@@ -13,11 +13,9 @@
     <div id="header"></div>
     <div id="checkout-container">
         <div id="progress_bar">
-            <p class="teks-checkout">Checkout</p>
+            <p class="teks-checkout">Review Booking</p>
             <p>></p>
             <p class="teks-payment">Payment</p>
-            <p>></p>
-            <p class="teks-review">Review Booking</p>
             <p>></p>
             <p class="teks-success">Success</p>
         </div>
@@ -89,7 +87,7 @@
                     <p>Order ID</p>
                     <p id="order-id-num">1432312312318</p>
                 </div>
-                <h3>HaBaBox Bandung</h3>
+                <h3 id="room-name">Wiwuwiwu</h3>
                 <div id="order-grid-nest">
                     <div id="payment-check-in">
                         <p>Check In</p>
@@ -127,18 +125,18 @@
                 </div>
                 <div id="habapoint-div">
                     <p>Habapoint</p>
-                    <p>Rp.</p>
+                    <p>Rp. 0.00 </p>
                 </div>
                 <div id="voucher-div">
                     <p>Voucher</p>
-                    <p>Rp.</p>
+                    <p>Rp. 0.00 </p>
                 </div>
                 <div id="total-div">
                     <p>Total</p>
-                    <p>Rp. 200.340</p>
+                    <p id="total-payment">Rp. 200.340</p>
                 </div>
 
-                <button id="pay-button" onclick="document.location='profile.html'">Pay</button>
+                <button id="pay-button">Pay</button>
             </div>
         </div>
     </div>
@@ -187,6 +185,7 @@
         }
     </script>
     <script src="javascript/main.js"></script>
+    <script src="javascript/payment.js"></script>
 </body>
 
 </html>

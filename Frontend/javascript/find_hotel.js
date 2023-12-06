@@ -1,9 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
-  function fetchAndPopulateHotel(event) {
+    function formatRupiah(amount) {
+        var formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 2
+        });
+        return formatter.format(amount);
+    }
+  
+    function fetchAndPopulateHotel(event) {
     (async () => {
       // Prevent the default form submission behavior
       event.preventDefault();
       // Check if the current window location is not already "hotel.html"
+    
+        // Get form data
+        const cityInput = document.getElementById("city").value;
+        const checkInDateInput = document.getElementById("checkin").value;
+        const checkOutDateInput = document.getElementById("checkout").value;
+        const durationInput = document.getElementById("nights").value;
+
+        // Save data to sessionStorage
+        sessionStorage.setItem("duration", durationInput);
+        sessionStorage.setItem("city", cityInput);
+        sessionStorage.setItem("checkIn", checkInDateInput);
+        sessionStorage.setItem("checkOut", checkOutDateInput);
+
       if (window.location.href.indexOf("hotel.html") === -1) {
         // Redirect to hotel.html
         window.location.href = "hotel.html";
@@ -22,9 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       async function getHotelRooms() {
-        const cityInput = document.getElementById("city").value;
-        const checkInDateInput = document.getElementById("checkin").value;
-        const checkOutDateInput = document.getElementById("checkout").value;
+        const cityInput = sessionStorage.getItem("city");
+        const checkInDateInput = sessionStorage.getItem("checkIn");
+        const checkOutDateInput = sessionStorage.getItem("checkOut");
 
         try {
           const url = await fetch(
@@ -83,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Create inner div
                     const hotelPara = document.createElement('div');
                     hotelPara.id = 'hotelpara';
-                    hotelPara.className = 'w-1/2 h-auto flex flex-col my-10 relative';
+                    hotelPara.className = 'w-10/12 h-auto flex flex-col my-10 relative';
 
                     // Create h1
                     const h1hotel = document.createElement('h1');
@@ -95,11 +117,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     // Create p
                     const photel = document.createElement('p');
-                    photel.className = 'my-4 mr-14';
-                    photel.textContent = room.roomTypeId + "\n" + room.status;
+                    photel.className = 'mt-4 mr-14 font-semibold';
+                    photel.textContent = "Room Type: " + room.roomType.type;
+
+                    const photel1 = document.createElement('p');
+                    photel1.className = 'mb-4 mr-14 font-semibold';
+                    photel1.textContent = "Amenities: " + room.roomType.description;
 
                     // Append p to inner div
                     hotelPara.appendChild(photel);
+                    hotelPara.appendChild(photel1);
 
                     // Create bottom div
                     const divbutton = document.createElement('div');
@@ -108,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Create p for price
                     const pricebutton = document.createElement('p');
                     pricebutton.className = 'text-2xl font-bold py-2';
-                    pricebutton.textContent = room.price;  // Replace this with the actual price if available
+                    pricebutton.textContent = formatRupiah(room.roomType.price);  // Replace this with the actual price if available
 
                     // Append price p to bottom div
                     divbutton.appendChild(pricebutton);
@@ -118,7 +145,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     buttonbook.type = 'button';
                     buttonbook.className = 'bg-gray-400 font-bold px-4 py-2 rounded-2xl hover:bg-pink-300';
                     buttonbook.textContent = 'Book Now!';
-                    buttonbook.onclick = function() { document.location='payment.html'; };
+                    buttonbook.onclick = function() {
+                        // Store room.id in sessionStorage
+                        sessionStorage.setItem("roomId", room.roomId);
+                        sessionStorage.setItem("roomPrice", room.roomType.price);
+                        sessionStorage.setItem("roomType", room.roomType.type);
+                        document.location='payment.html';
+                    };
 
                     // Append button to bottom div
                     divbutton.appendChild(buttonbook);
