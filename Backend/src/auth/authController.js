@@ -24,7 +24,7 @@ exports.registerUser = async (req, res) => {
       name: name,
       email: email,
       point: 0,
-      profilePic: "path",
+      profilePic: "images/default_pfp.jpeg",
     };
 
     // Use the UID as the document ID in Firestore

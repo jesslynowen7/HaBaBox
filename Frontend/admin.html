@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>
+            Hababox
+        </title>
+        <link rel="icon" href="images/LogoHBB.svg">
+        <meta name="description" content="Hababox Admin Page" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="" />
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+        <link rel="stylesheet" href="css/profile.css">
+
+    </head>
+
+    <body>
+        <div id="content-container">
+            <div id="nav-menu" class="bg-slate-400 align-center justify-center my-56">
+                <form id="form_menu" action="#">
+                    <label>
+                        <input type="radio" id="hotel" name="pilihan_menu" value="hotel" checked="true">
+                        Hotel Settings
+                    </label>
+
+                    <label>
+                        <input type="radio" id="room" name="pilihan_menu" value="room">
+                        Room Settings
+                    </label>
+
+                    <label>
+                        <input type="radio" id="promo" name="pilihan_menu" value="promo">
+                        Promotion Settings
+                    </label>
+
+                    <input id="logout_button" type="button" value="Logout">
+                    <div class="popup" id="popup">
+                        <img src="images/question_mark.png" alt="?">
+                        <h2>Are you sure?</h2>
+                        <p>You will be logged out of your account!</p>
+                        <button id="cancel_button">Cancel</button>
+                        <button id="confirm_button">Confirm</button> <!-- Tambahin fungsi buat logout klo press confirm -->
+                    </div>
+                </form>
+            </div>
+            <div id="isi_menu">
+
+            </div>
+        </div>
+
+        <script type="module" src="javascript/admin.js"></script>
+    </body>
+    
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>
+            Hababox
+        </title>
+        <link rel="icon" href="images/LogoHBB.svg">
+        <meta name="description" content="Hababox Home Page" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="" />
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+    </head>
+
+    <body>
+        <!-- Navbar -->
+        <div id="header"></div>
+
+        <div class="w-full">
+            <h1 class="text-3xl font-bold mx-auto w-1/2 mt-24">Change Locations and Dates!</h1>
+            <form id="find-hotel" class="w-7/12 flex mt-8 mb-12 mx-auto">
+                <div class="w-1/4 bg-gray-400 h-12 pr-1.5 rounded-l-full">
+                    <select name="location"
+                    class="block appearance-none w-full h-full rounded-l-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="city">
+                    </select>
+                </div>
+                <div class="w-1/4 bg-gray-400 h-12 pr-1.5">
+                    <input type="date"
+                    class="appearance-none block w-full bg-gray-50 text-gray-700 border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="checkin" name="checkin" placeholder="Check In" required>
+                </div>
+                <div class="w-1/5 bg-gray-400 h-12 pr-1.5">
+                    <input type="number" id="nights"
+                    class="appearance-none block w-full h-full bg-gray-50 text-gray-700 border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="1 night" min="1" oninput="getCheckOutDate()">
+                </div>
+                <div class="w-1/4 bg-gray-400 h-12 pr-1.5">
+                    <input type="date" id="checkout" class="appearance-none block w-full bg-gray-50 text-gray-700 border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="checkout" placeholder="Check Out" readonly>
+                </div>
+                <div class="w-14 bg-gray-50 h-12 rounded-r-full">
+                    <input alt="submit" onclick="populateHotelContainer()" type="image" src="images/icon_search.svg" class="my-1 mx-1.5 w-8/12 h-8/12">
+                </div>
+            </form>
+        </div>
+
+        <h1 class="text-3xl font-bold mx-auto w-1/2 mt-10">Choose Your Pod</h1>
+        <div id="hotelbody" class="w-full h-auto justify-center flex flex-col">
+            <div id="hoteldiv" class="w-1/2 h-auto flex flex-row mx-auto border-solid rounded-3xl border-black bg-gray-200 m-10">
+                <img id="hotelimage" alt="hotel" src="images/assets/HorizontalImage1.jpg" class="mx-8 my-10 rounded-xl w-1/2">
+                <div id="hotelpara" class="w-1/2 h-auto flex flex-col my-10 relative">
+                    <h1 class="font-bold text-3xl">Hababox 7</h1>
+                    <p class="my-4 mr-14">
+                        Room Type: Capsule.
+                        Description: Single bed with small TV.
+                    </p>
+                    <div class="w-11/12 flex flex-row justify-between absolute bottom-0">
+                        <p class="text-2xl font-bold py-2">200000</p>
+                        <button type="button" class="bg-gray-400 font-bold px-4 py-2 rounded-2xl hover:bg-pink-300" onclick="document.location='payment.html'">Book Now!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer"></div>
+
+        <!-- Script -->
+        <script src="javascript/main.js"></script>
+        <script src="javascript/search_hotel.js"></script>
+        <script src="javascript/find_hotel.js"></script>
+        <script src="javascript/search_hotel.js"></script>
+        <script src="javascript/city_options.js"></script>
+    </body>
+
+</html>

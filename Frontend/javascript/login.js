@@ -13,9 +13,16 @@ async function login() {
 
   const result = await response.json();
 
+  
+
   if (response.ok) {
     // Successful login, handle the result as needed
     console.log(result);
+
+    if (email == "admin@gmail.com") {
+      window.location.href = "admin.html";
+      return;
+    }
 
     window.location.href = "index.html";
   } else {

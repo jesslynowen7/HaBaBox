@@ -103,3 +103,31 @@ exports.deleteHotel = async (req, res) => {
       .json({ message: "Failed to delete hotel", error: error.message });
   }
 };
+
+exports.getCityNames = async (req, res) => {
+  try {
+    const snapshot = await db.collection("hotels").get();
+    const dataArr = [];
+    if (snapshot.empty) {
+      res
+        .status(200)
+        .json({ message: "No hotels found", error: null, data: null });
+      return;
+    }
+    snapshot.forEach((doc) => {
+      id = doc.id;
+      data = doc.data();
+      dataArr.push({ id, data });
+    });
+
+    res.status(200).json({
+      message: "city(s) retrieved successfully!",
+      error: null,
+      data: dataArr,
+    });
+  } catch (error) {
+    res
+      .status(401)
+      .json({ message: "Failed to get city(s)", error: error.message });
+  }
+};
