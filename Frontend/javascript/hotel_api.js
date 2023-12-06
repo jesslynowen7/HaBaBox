@@ -5,7 +5,7 @@ async function getHotelRooms() {
 
     try {
         const url = await fetch(
-            `https://localhost:8080/room/${encodeURIComponent(cityInput)}/${encodeURIComponent(checkInDateInput)}/${encodeURIComponent(checkOutDateInput)}`,
+            `https://localhost:8080/room${encodeURIComponent(cityInput)}/${encodeURIComponent(checkInDateInput)}/${encodeURIComponent(checkOutDateInput)}`,
             {
                 method: "GET",
                 credentials: "include", // Include cookies in the request
