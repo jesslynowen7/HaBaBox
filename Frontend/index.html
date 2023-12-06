@@ -57,7 +57,7 @@
             <input type="date" id="checkout" class="appearance-none block w-full bg-gray-50 text-gray-700 border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="checkout" placeholder="Check Out" readonly>
           </div>
           <div class="w-14 bg-gray-50 h-12 rounded-r-full">
-            <button type="submit" class="my-1 mx-1.5 w-8/12 h-8/12" onclick="document.location='hotel.html'"><img alt="submit" src="images/icon_search.svg"></button>
+            <button id="submit_hotel_search" type="submit" class="my-1 mx-1.5 w-8/12 h-8/12"><img alt="submit" src="images/icon_search.svg"></button>
           </div>
         </form>
       </div>
@@ -131,7 +131,7 @@
     <script src="javascript/search_hotel.js"></script>
     <script src="javascript/city_options.js"></script>
     <script src="javascript/find_hotel.js"></script>
-    <script src="javascript/hotel_api.js"></script>
+    <script type="module" src="javascript/hotel_api.js"></script>
   </body>
 
 </html>
