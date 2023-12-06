@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         sessionStorage.setItem("roomId", room.roomId);
                         sessionStorage.setItem("roomPrice", room.roomType.price);
                         sessionStorage.setItem("roomType", room.roomType.type);
-                        document.location='payment.html';
+                        document.location='checkout.html';
                     };
 
                     // Append button to bottom div

@@ -97,42 +97,9 @@ window.onload = async function() {
     roomNameElement.textContent = roomData.hotelName;
     roomOrderedElement.textContent = roomType;
 
-    const payButton = document.getElementById('pay-button');
+    const payButton = document.getElementById('done-button');
     payButton.addEventListener('click', async function() {
-        await postTransaction(emailData, roomId, "nais", checkInDate, checkOutDate, durationTime, totalPrice);
-        window.location.href = 'success.html';
+        window.location.href = 'profile.html';
     });
 };
-
-async function postTransaction(email, roomId, promo, checkin, checkout, duration, totalprice) {
-    // Create an empty JSON object
-    let jsonObject = {};
-
-    // Add properties to the JSON object
-    jsonObject["email"] = email;
-    jsonObject["roomId"] = roomId;
-    jsonObject["promoCode"] = promo;
-    jsonObject["checkinDate"] = checkin;
-    jsonObject["checkoutDate"] = checkout;
-    jsonObject["duration"] = duration;
-    jsonObject["totalPrice"] = totalprice;
-    jsonObject["status"] = "Paid";
-
-    try {
-        const response = await fetch('https://localhost:8080/transaction', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(jsonObject),
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-    } catch (error) {
-        console.error('Failed to post hotel data:', error);
-    }
-
-}
 

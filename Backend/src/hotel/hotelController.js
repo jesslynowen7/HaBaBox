@@ -133,3 +133,30 @@ exports.getCityNames = async (req, res) => {
     });
   }
 };
+
+exports.getHotelByName = async (req, res) => {
+  try {
+    const hotelName = req.params["hotelName"];
+    const snapshot = await ref.where("name", "==", hotelName).get();
+    if (snapshot.empty) {
+      res
+        .status(200)
+        .json({ message: "No hotel found", error: null, data: null });
+      return;
+    }
+    snapshot.forEach((doc) => {
+      id = doc.id;
+      data = doc.data();
+    });
+
+    res.status(200).json({
+      message: "hotel retrieved successfully!",
+      error: null,
+      data: data,
+    });
+  } catch (error) {
+    res
+      .status(401)
+      .json({ message: "Failed to get hotel", error: error.message });
+  }
+};

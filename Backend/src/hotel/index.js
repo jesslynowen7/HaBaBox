@@ -4,7 +4,7 @@ const {
   insertHotel,
   updateHotel,
   deleteHotel,
-  getHotelsByRoomType,
+  getHotelByName,
   getCityNames,
 } = require("./hotelController");
 
@@ -16,5 +16,6 @@ router.delete("/:hotelName", deleteHotel);
 //User
 // router.post('/room-types/:roomTypeId', getHotelsByRoomType);
 router.get("/city", getCityNames);
+router.get("/:hotelName", getHotelByName);
 
 module.exports = router;

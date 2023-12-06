@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Stay</title>
-    <script src="javascript/include_header_footer.js"></script>
+    <title>Check Out</title>
     <link rel="stylesheet" href="css/checkout.css">
 </head>
 
@@ -25,9 +24,9 @@
     </div>
     <div class="checkout_n_detail_container">
         <div id="checkout">
-            <h3>Hababox Bandung</h3>
-            <p>Alamat</p>
-            <p>Alamat</p>
+            <h3 id="room-name">Hababox Bandung</h3>
+            <p id="hotel-address">Alamat</p>
+            <p id="hotel-city">Alamat</p>
             <div id="tel_email_container">
                 <div id="telephone">
                     <h4>Telephone</h4>
@@ -35,17 +34,17 @@
                 </div>
                 <div class="email">
                     <h4>E-Mail</h4>
-                    <p id="alamat-email">haba@box.com</p>
+                    <p id="email-data">haba@box.com</p>
                 </div>
             </div>
             <div id="container-checkin-dll">
                 <div id="checkin">
                     <h4>Checkin</h4>
-                    <p id="tanggal-checkin">23 Dec 2023</p>
+                    <p id="check-in-date">23 Dec 2023</p>
                 </div>
                 <div id="checkout">
                     <h4>Checkout</h4>
-                    <p id="tanggal-checkout">24 Dec 2023</p>
+                    <p id="check-out-date">24 Dec 2023</p>
                 </div>
                 <div id="stay-duration">
                     <h4>Stay Duration</h4>
@@ -53,7 +52,7 @@
                 </div>
                 <div id="pod">
                     <h4>Pod Type</h4>
-                    <p id="pod-type">Sky Double</p>
+                    <p id="room-ordered">Sky Double</p>
                 </div>
                 <div id="number-of-pods">
                     <h4>Number of Pods</h4>
@@ -66,7 +65,7 @@
                 
             </div>
             <div id="harga-n-button">
-                <p id="price">Rp. 200.300,00</p>
+                <p id="total-payment">Rp. 200.300,00</p>
                 <form action="#">
                     <input id="button-checkout" type="button" value="Checkout">
                 </form>
@@ -76,6 +75,7 @@
     <!-- Include the footer -->
     <div id="footer"></div>
     <script src="javascript/main.js"></script>
+    <script src="javascript/checkout.js"></script>
 </body>
 
 </html>
