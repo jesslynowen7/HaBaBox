@@ -40,9 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const result = await url.json();
 
-          if (result.ok) {
+          if (url.ok) {
             console.log(result);
-            alert(result.message);
             return Array.isArray(result.data) ? result.data : []; // Ensure result.data is an array
             
           } else {
@@ -102,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "hover:bg-pink-300"
                 );
 
-                hotelImg.src = entry.data.roomImg;
+                hotelImg.src = entry.roomImg;
                 h1hotel.textContent = entry.hotelName;
                 photel.textContent = entry.roomTypeId;
                 pricebutton.textContent = entry.roomTypeId;
