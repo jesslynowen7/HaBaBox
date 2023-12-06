@@ -64,56 +64,74 @@ document.addEventListener("DOMContentLoaded", () => {
             container.innerHTML = "";
 
             hotelRoomData.forEach((entry) => {
-                const hotelImg = document.createElement("img");
-                const hotelpara = document.createElement("div");
-                const h1hotel = document.createElement("h1");
-                const photel = document.createElement("p");
-                const divbutton = document.createElement("div");
-                const pricebutton = document.createElement("p");
-                const buttonbook = document.createElement("button");
+                entry.roomArr.forEach((room) => {
+                    // Create main div
+                    const hotelDiv = document.createElement('div');
+                    hotelDiv.id = 'hoteldiv';
+                    hotelDiv.className = 'w-1/2 h-auto flex flex-row mx-auto border-solid rounded-3xl border-black bg-gray-200 m-10';
 
-                hotelImg.classList.add("mx-8", "my-10", "rounded-xl", "w-1/2");
-                hotelpara.classList.add(
-                    "w-1/2",
-                    "h-auto",
-                    "flex",
-                    "flex-col",
-                    "my-10",
-                    "relative"
-                );
-                h1hotel.classList.add("font-bold", "text-3xl");
-                photel.classList.add("my-4", "mr-14"); // Assuming photel is a typo, and it should be pHotel
-                divbutton.classList.add(
-                    "w-11/12",
-                    "flex",
-                    "flex-row",
-                    "justify-between",
-                    "absolute",
-                    "bottom-0"
-                );
-                pricebutton.classList.add("text-2xl", "font-bold", "py-2");
-                buttonbook.classList.add(
-                    "bg-gray-400",
-                    "font-bold",
-                    "px-4",
-                    "py-2",
-                    "rounded-2xl",
-                    "hover:bg-pink-300"
-                );
+                    // Create img
+                    const hotelImage = document.createElement('img');
+                    hotelImage.id = 'hotelimage';
+                    hotelImage.alt = 'hotel';
+                    hotelImage.src = room.roomImg;  // Use room.roomImg here
+                    hotelImage.className = 'mx-8 my-10 rounded-xl w-1/4';
 
-                hotelImg.src = entry.roomImg;
-                h1hotel.textContent = entry.hotelName;
-                photel.textContent = entry.roomTypeId;
-                pricebutton.textContent = entry.roomTypeId;
+                    // Append img to main div
+                    hotelDiv.appendChild(hotelImage);
 
-                divbutton.appendChild(buttonbook);
-                divbutton.appendChild(pricebutton);
-                hotelpara.appendChild(h1hotel);
-                hotelpara.appendChild(photel);
-                hotelpara.appendChild(divbutton);
+                    // Create inner div
+                    const hotelPara = document.createElement('div');
+                    hotelPara.id = 'hotelpara';
+                    hotelPara.className = 'w-1/2 h-auto flex flex-col my-10 relative';
 
-                container.appendChild(hotelImg);
-                container.appendChild(hotelpara);
+                    // Create h1
+                    const h1hotel = document.createElement('h1');
+                    h1hotel.className = 'font-bold text-3xl';
+                    h1hotel.textContent = entry.hotelName;  // Use hotel.hotelName here
+
+                    // Append h1 to inner div
+                    hotelPara.appendChild(h1hotel);
+
+                    // Create p
+                    const photel = document.createElement('p');
+                    photel.className = 'my-4 mr-14';
+                    photel.textContent = room.roomTypeId + "\n" + room.status;
+
+                    // Append p to inner div
+                    hotelPara.appendChild(photel);
+
+                    // Create bottom div
+                    const divbutton = document.createElement('div');
+                    divbutton.className = 'w-11/12 flex flex-row justify-between absolute bottom-0';
+
+                    // Create p for price
+                    const pricebutton = document.createElement('p');
+                    pricebutton.className = 'text-2xl font-bold py-2';
+                    pricebutton.textContent = room.price;  // Replace this with the actual price if available
+
+                    // Append price p to bottom div
+                    divbutton.appendChild(pricebutton);
+
+                    // Create button
+                    const buttonbook = document.createElement('button');
+                    buttonbook.type = 'button';
+                    buttonbook.className = 'bg-gray-400 font-bold px-4 py-2 rounded-2xl hover:bg-pink-300';
+                    buttonbook.textContent = 'Book Now!';
+                    buttonbook.onclick = function() { document.location='payment.html'; };
+
+                    // Append button to bottom div
+                    divbutton.appendChild(buttonbook);
+
+                    // Append bottom div to inner div
+                    hotelPara.appendChild(divbutton);
+
+                    // Append inner div to main div
+                    hotelDiv.appendChild(hotelPara);
+
+                    // Append main div to another div
+                    document.getElementById('hotelbody').appendChild(hotelDiv);
+                });
             });
         } catch (error) {
           const container = document.getElementById("hotelbody");
