@@ -19,8 +19,9 @@ async function getUserProfilePic() {
       alert("Error fetching user data. Please try again.");
     }
   } catch (error) {
-    console.error("Error fetching user data:", error);
     // Handle the error accordingly
+    console.error("Error fetching user data:", error);
+    window.location.href("login.html");
   }
 }
 

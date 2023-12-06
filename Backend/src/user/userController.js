@@ -96,9 +96,23 @@ exports.updateUserData = async (req, res) => {
       secure: true,
       sameSite: "none",
     };
-    res.cookie("email", newDataUser.email, cookieOptions);
-    res.cookie("profilePic", newDataUser.profilePic, cookieOptions);
-    res.cookie("name", newDataUser.name, cookieOptions);
+    // Get the time when the cookie was first set
+    let initialTime = req.cookies.initialTime;
+
+    // Calculate the remaining time
+    let elapsedTime = Date.now() - initialTime;
+    let remainingTime = 3600000 - elapsedTime;
+
+    // Update the cookie options
+    let updatedCookieOptions = {
+      ...cookieOptions,
+      maxAge: remainingTime > 0 ? remainingTime : 0,
+    };
+
+    // Set the cookies
+    res.cookie("email", newDataUser.email, updatedCookieOptions);
+    res.cookie("profilePic", newDataUser.profilePic, updatedCookieOptions);
+    res.cookie("name", newDataUser.name, updatedCookieOptions);
 
     res.status(200).json({
       message: "User data updated successfully",

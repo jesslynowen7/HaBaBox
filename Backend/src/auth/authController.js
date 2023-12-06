@@ -76,7 +76,9 @@ exports.loginUser = async (req, res) => {
       secure: true,
       sameSite: "none",
     };
-
+    // Set the initial time to now
+    const initialTime = Date.now();
+    res.cookie("initialTime", initialTime, cookieOptions);
     res.cookie("access_token", accessToken, cookieOptions);
     res.cookie("email", data.email, cookieOptions);
     res.cookie("points", data.point, cookieOptions);
