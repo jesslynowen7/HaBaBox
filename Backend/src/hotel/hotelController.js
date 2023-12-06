@@ -106,28 +106,30 @@ exports.deleteHotel = async (req, res) => {
 
 exports.getCityNames = async (req, res) => {
   try {
-    const snapshot = await db.collection("hotels").get();
-    const dataArr = [];
-    if (snapshot.empty) {
-      res
-        .status(200)
-        .json({ message: "No hotels found", error: null, data: null });
-      return;
-    }
+    const snapshot = await ref.get();
+    const citySet = new Set();
+
     snapshot.forEach((doc) => {
-      id = doc.id;
-      data = doc.data();
-      dataArr.push({ id, data });
+      const data = doc.data();
+      // Assuming the city information is stored in the 'city' field
+      const city = data.city;
+
+      if (city) {
+        citySet.add(city);
+      }
     });
 
+    const distinctCities = Array.from(citySet);
+
     res.status(200).json({
-      message: "city(s) retrieved successfully!",
+      message: "Distinct city(s) retrieved successfully!",
       error: null,
-      data: dataArr,
+      data: distinctCities,
     });
   } catch (error) {
-    res
-      .status(401)
-      .json({ message: "Failed to get city(s)", error: error.message });
+    res.status(401).json({
+      message: "Failed to get distinct city(s)",
+      error: error.message,
+    });
   }
 };

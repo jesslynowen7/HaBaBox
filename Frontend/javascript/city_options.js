@@ -16,7 +16,7 @@
         const result = await response.json();
 
         if (response.ok) {
-            console.log(result);
+            console.log(result.data);
             return Array.isArray(result.data) ? result.data : []; // Ensure result.data is an array
         } else {
             console.error(result);
@@ -46,14 +46,13 @@
             // Create and append options based on the data
             cityData.forEach((entry) => {
                 const optionElement = document.createElement('option');
-                optionElement.value = entry.data.city;
-                optionElement.text = entry.data.city;
+                optionElement.value = entry;
+                optionElement.text = entry;
 
                 // Append the option to the select element
                 selectElement.appendChild(optionElement);
             });
         } catch (error) {
-            const cityData = await getCityOptions();
             const selectElement = document.getElementById('city');
 
             // Clear existing options

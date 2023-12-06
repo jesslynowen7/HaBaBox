@@ -1,4 +1,7 @@
-async function login() {
+async function login(event) {
+  // Prevent the form from being submitted normally
+  event.preventDefault();
+
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
@@ -12,8 +15,6 @@ async function login() {
   });
 
   const result = await response.json();
-
-  
 
   if (response.ok) {
     // Successful login, handle the result as needed
@@ -31,3 +32,6 @@ async function login() {
     alert(result.message);
   }
 }
+
+// Add the event listener to the form
+document.getElementById("loginForm").addEventListener("submit", login);

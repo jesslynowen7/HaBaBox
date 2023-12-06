@@ -14,6 +14,7 @@
         <meta name="author" content="" />
         <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+        <script defer src="javascript/find_hotel.js"></script>
     </head>
 
     <body>
@@ -43,7 +44,7 @@
                     <input type="date" id="checkout" class="appearance-none block w-full bg-gray-50 text-gray-700 border border-gray-200 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="checkout" placeholder="Check Out" readonly>
                 </div>
                 <div class="w-14 bg-gray-50 h-12 rounded-r-full">
-                    <input alt="submit" onclick="populateHotelContainer()" type="image" src="images/icon_search.svg" class="my-1 mx-1.5 w-8/12 h-8/12">
+                    <input alt="submit" id="submit_hotel_search" type="image" src="images/icon_search.svg" class="my-1 mx-1.5 w-8/12 h-8/12">
                 </div>
             </form>
         </div>
@@ -71,7 +72,6 @@
         <!-- Script -->
         <script src="javascript/main.js"></script>
         <script src="javascript/search_hotel.js"></script>
-        <script src="javascript/find_hotel.js"></script>
         <script src="javascript/city_options.js"></script>
     </body>
 
